@@ -8,7 +8,8 @@
 <link rel="import" href="../api-annotation-document/api-annotation-document.html">
 <link rel="import" href="../api-headers-document/api-headers-document.html">
 <link rel="import" href="../api-body-document/api-body-document.html">
-<link rel="import" href="api-responses-status-menu.html">
+<link rel="import" href="../paper-tabs/paper-tabs.html">
+<link rel="import" href="../paper-tabs/paper-tab.html">
 <dom-module id="api-responses-document">
   <template>
     <style include="markdown-styles"></style>
@@ -29,28 +30,34 @@
       margin-left: 16px;
       overflow: auto;
     }
+
+    marked-element {
+      margin-top: 8px;
+    }
     </style>
     <template is="dom-if" if="[[aware]]">
       <raml-aware raml="{{amfModel}}" scope="[[aware]]"></raml-aware>
     </template>
-    <div class="container">
-      <api-responses-status-menu codes="[[codes]]" selected="{{selected}}"></api-responses-status-menu>
-      <div class="docs">
-        <template is="dom-if" if="[[hasCustomProperties]]">
-          <api-annotation-document shape="[[selectedResponse]]"></api-annotation-document>
-        </template>
-        <template is="dom-if" if="[[description]]">
-          <marked-element markdown="[[description]]">
-            <div slot="markdown-html" class="markdown-body"></div>
-          </marked-element>
-        </template>
-        <template is="dom-if" if="[[hasHeaders]]">
-          <api-headers-document opened amf-model="[[amfModel]]" headers="[[headers]]"></api-headers-document>
-        </template>
-        <template is="dom-if" if="[[hasPayload]]">
-          <api-body-document amf-model="[[amfModel]]" body="[[payload]]" opened></api-body-document>
-        </template>
-      </div>
+    <paper-tabs selected="{{selected}}">
+      <template is="dom-repeat" items="[[codes]]">
+        <paper-tab>[[item]]</paper-tab>
+      </template>
+    </paper-tabs>
+    <div class="docs">
+      <template is="dom-if" if="[[hasCustomProperties]]">
+        <api-annotation-document shape="[[selectedResponse]]"></api-annotation-document>
+      </template>
+      <template is="dom-if" if="[[description]]">
+        <marked-element markdown="[[description]]">
+          <div slot="markdown-html" class="markdown-body"></div>
+        </marked-element>
+      </template>
+      <template is="dom-if" if="[[hasHeaders]]">
+        <api-headers-document opened amf-model="[[amfModel]]" headers="[[headers]]"></api-headers-document>
+      </template>
+      <template is="dom-if" if="[[hasPayload]]">
+        <api-body-document amf-model="[[amfModel]]" body="[[payload]]" opened></api-body-document>
+      </template>
     </div>
   </template>
   <script>
@@ -115,7 +122,8 @@
          */
         codes: {
           type: Array,
-          computed: '_computeCodes(returns)'
+          computed: '_computeCodes(returns)',
+          observer: '_codesChanged'
         },
         /**
          * Selected index of a status code from the selector.
@@ -315,6 +323,18 @@
      */
     _computeHasHeaders(headers) {
       return !!(headers && headers.length);
+    }
+    /**
+     * Sets `selected` 0 when codes changes.
+     * It only sets selection if there's actually a value to render.
+     * It prohibits from performing additional computations for nothing.
+     *
+     * @param {?Array} codes
+     */
+    _codesChanged(codes) {
+      if (codes && codes.length) {
+        this.selected = 0;
+      }
     }
   }
   window.customElements.define(ApiResponsesDocument.is, ApiResponsesDocument);
