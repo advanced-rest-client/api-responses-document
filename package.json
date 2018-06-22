@@ -1,7 +1,7 @@
 {
   "name": "@api-components/api-responses-document",
   "description": "A documentation for method responses based on AMF model",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "Apache-2.0",
   "main": "api-responses-document.html",
   "authors": [
@@ -10,7 +10,7 @@
   ],
   "devDependencies": {
     "@polymer/gen-typescript-declarations": "^1.1.1",
-    "amf-client-js": "^1.4.0-29"
+    "amf-client-js": "^1.5.0-1"
   },
   "private": false,
   "scripts": {
