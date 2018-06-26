@@ -15,8 +15,8 @@ AmfLoader.load = function(endpointIndex, methodIndex) {
         reject(e);
         return;
       }
-      const def = data[0]['http://raml.org/vocabularies/document#encodes'][0];
-      const endpoint = def['http://raml.org/vocabularies/http#endpoint'][endpointIndex];
+      const def = data[0]['http://a.ml/vocabularies/document#encodes'][0];
+      const endpoint = def['http://a.ml/vocabularies/http#endpoint'][endpointIndex];
       const method = endpoint['http://www.w3.org/ns/hydra/core#supportedOperation'][methodIndex];
       const returns = method['http://www.w3.org/ns/hydra/core#returns'];
       resolve([data, returns]);
