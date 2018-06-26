@@ -46,7 +46,7 @@ declare namespace ApiElements {
    * Custom property | Description | Default
    * ----------------|-------------|----------
    * `--api-responses-document` | Mixin applied to this elment | `{}`
-   * `--raml-docs-response-panel-container` | Mixin applied to element's container holding menu and docs together. | `{}`
+   * `--no-info-message` | Theme mixin, applied to empty info message | `{}`
    */
   class ApiResponsesDocument extends
     ApiElements.AmfHelperMixin(
@@ -127,6 +127,12 @@ declare namespace ApiElements {
     readonly hasCustomProperties: boolean|null|undefined;
 
     /**
+     * Computed value, true when a status is defined but does not
+     * contain any documentation.
+     */
+    readonly noDocs: boolean|null|undefined;
+
+    /**
      * Computes value for the `headers` property
      *
      * @param response AMF model for Response
@@ -191,6 +197,7 @@ declare namespace ApiElements {
      * It prohibits from performing additional computations for nothing.
      */
     _codesChanged(codes: any[]|null): void;
+    _computeNoDocs(hasCustomProperties: any, hasHeaders: any, hasPayload: any, hasDescription: any): any;
   }
 }
 

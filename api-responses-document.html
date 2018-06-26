@@ -21,19 +21,12 @@
       @apply --api-responses-document;
     }
 
-    .container {
-      @apply --layout-horizontal;
-      @apply --raml-docs-response-panel-container;
-    }
-
-    .docs {
-      @apply --layout-flex;
-      margin-left: 16px;
-      overflow: auto;
-    }
-
     marked-element {
       margin-top: 8px;
+    }
+
+    .no-info {
+      @apply --no-info-message;
     }
     </style>
     <template is="dom-if" if="[[aware]]">
@@ -44,22 +37,23 @@
         <paper-tab>[[item]]</paper-tab>
       </template>
     </paper-tabs>
-    <div class="docs">
-      <template is="dom-if" if="[[hasCustomProperties]]">
-        <api-annotation-document shape="[[selectedResponse]]"></api-annotation-document>
-      </template>
-      <template is="dom-if" if="[[description]]">
-        <marked-element markdown="[[description]]">
-          <div slot="markdown-html" class="markdown-body"></div>
-        </marked-element>
-      </template>
-      <template is="dom-if" if="[[hasHeaders]]">
-        <api-headers-document opened amf-model="[[amfModel]]" headers="[[headers]]"></api-headers-document>
-      </template>
-      <template is="dom-if" if="[[hasPayload]]">
-        <api-body-document amf-model="[[amfModel]]" body="[[payload]]" opened></api-body-document>
-      </template>
-    </div>
+    <template is="dom-if" if="[[hasCustomProperties]]">
+      <api-annotation-document shape="[[selectedResponse]]"></api-annotation-document>
+    </template>
+    <template is="dom-if" if="[[description]]">
+      <marked-element markdown="[[description]]">
+        <div slot="markdown-html" class="markdown-body"></div>
+      </marked-element>
+    </template>
+    <template is="dom-if" if="[[hasHeaders]]">
+      <api-headers-document opened amf-model="[[amfModel]]" headers="[[headers]]"></api-headers-document>
+    </template>
+    <template is="dom-if" if="[[hasPayload]]">
+      <api-body-document amf-model="[[amfModel]]" body="[[payload]]" opened></api-body-document>
+    </template>
+    <template is="dom-if" if="[[noDocs]]">
+      <p class="no-info">No description provided</p>
+    </template>
   </template>
   <script>
   /**
@@ -84,7 +78,7 @@
    * Custom property | Description | Default
    * ----------------|-------------|----------
    * `--api-responses-document` | Mixin applied to this elment | `{}`
-   * `--raml-docs-response-panel-container` | Mixin applied to element's container holding menu and docs together. | `{}`
+   * `--no-info-message` | Theme mixin, applied to empty info message | `{}`
    *
    * @customElement
    * @polymer
@@ -190,6 +184,14 @@
         hasCustomProperties: {
           type: Boolean,
           computed: '_computeHasCustomProperties(selectedResponse)'
+        },
+        /**
+         * Computed value, true when a status is defined but does not
+         * contain any documentation.
+         */
+        noDocs: {
+          type: Boolean,
+          computed: '_computeNoDocs(hasCustomProperties, hasHeaders, hasPayload, hasDescription)'
         }
       };
     }
@@ -300,6 +302,10 @@
       if (codes && codes.length) {
         this.selected = 0;
       }
+    }
+
+    _computeNoDocs(hasCustomProperties, hasHeaders, hasPayload, hasDescription) {
+      return !(hasCustomProperties || hasHeaders || hasPayload || hasDescription);
     }
   }
   window.customElements.define(ApiResponsesDocument.is, ApiResponsesDocument);
