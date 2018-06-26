@@ -8,6 +8,7 @@
 <link rel="import" href="../api-annotation-document/api-annotation-document.html">
 <link rel="import" href="../api-headers-document/api-headers-document.html">
 <link rel="import" href="../api-body-document/api-body-document.html">
+<link rel="import" href="../amf-helper-mixin/amf-helper-mixin.html">
 <link rel="import" href="../paper-tabs/paper-tabs.html">
 <link rel="import" href="../paper-tabs/paper-tab.html">
 <dom-module id="api-responses-document">
@@ -89,8 +90,9 @@
    * @polymer
    * @demo demo/index.html
    * @memberof ApiElements
+   * @appliesMixin ApiElements.AmfHelperMixin
    */
-  class ApiResponsesDocument extends Polymer.Element {
+  class ApiResponsesDocument extends ApiElements.AmfHelperMixin(Polymer.Element) {
     static get is() { return 'api-responses-document'; }
     static get properties() {
       return {
@@ -149,7 +151,7 @@
          */
         hasDescription: {
           type: Boolean,
-          computed: '_computeHasDescription(description)'
+          computed: '_computeHasStringValue(description)'
         },
         /**
          * Computed value of AMF payload definition from `expects`
@@ -192,23 +194,6 @@
       };
     }
     /**
-     * Gets a signle scalar value from a model.
-     * @param {Object} model Amf model to extract the value from.
-     * @param {String} key Model key to search for the value
-     * @return {any} Value for key
-     */
-    _getValue(model, key) {
-      let data = (model && model[key]);
-      if (!data || !(data instanceof Array)) {
-        return;
-      }
-      data = data[0];
-      if (!data) {
-        return;
-      }
-      return data['@value'];
-    }
-    /**
      * Computes list of status codes for the selector.
      *
      * @param {Array<Object>} returns Current value of `returns` property
@@ -220,8 +205,7 @@
       }
       const codes = [];
       returns.forEach((item) => {
-        const node = item['http://www.w3.org/ns/hydra/core#statusCode'];
-        const value = node && node[0]['@value'];
+        const value = this._getValue(item, this.ns.w3.hydra.core + 'statusCode');
         if (value) {
           codes.push(value);
         }
@@ -257,27 +241,8 @@
       if (!item) {
         return false;
       }
-      const node = item['http://www.w3.org/ns/hydra/core#statusCode'];
-      const value = node ? node[0]['@value'] : undefined;
+      const value = this._getValue(item, this.ns.w3.hydra.core + 'statusCode');
       return value === status;
-    }
-    /**
-     * Computes value of `description` property.
-     *
-     * @param {Object} response AMF model for Response
-     * @return {String|undefined} Response description if defined.
-     */
-    _computeDescription(response) {
-      return this._getValue(response, 'http://schema.org/description');
-    }
-    /**
-     * Computes value for `hasDescription` property
-     *
-     * @param {?String} description Current value for description.
-     * @return {Boolean}
-     */
-    _computeHasDescription(description) {
-      return !!description;
     }
     /**
      * Computes value for `hasCustomProperties` property.
@@ -286,7 +251,7 @@
      * @return {Boolean}
      */
     _computeHasCustomProperties(response) {
-      return (response && 'http://raml.org/vocabularies/document#customDomainProperties' in response);
+      return (response && this.ns.raml.vocabularies.document + 'customDomainProperties' in response);
     }
     /**
      * Computes value for the `payload` property
@@ -295,7 +260,7 @@
      * @return {Array<Object>|undefined} Payload model if defined.
      */
     _computePayload(response) {
-      return response && response['http://raml.org/vocabularies/http#payload'];
+      return response && response[this.ns.raml.vocabularies.http + 'payload'];
     }
     /**
      * Computes value for `hasPayload` property
@@ -313,7 +278,7 @@
      * @return {Array<Object>|undefined} Headers model if defined.
      */
     _computeHeaders(response) {
-      return response && response['http://raml.org/vocabularies/http#header'];
+      return response && response[this.ns.raml.vocabularies.http + 'header'];
     }
     /**
      * Computes value for `hasHeaders` property

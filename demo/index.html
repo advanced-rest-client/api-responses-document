@@ -107,8 +107,8 @@
         }
       };
       app.setData = function(id) {
-        const enc = app.amfModel[0]['http://raml.org/vocabularies/document#encodes'][0];
-        const endpoints = enc['http://raml.org/vocabularies/http#endpoint'];
+        const enc = app.amfModel[0]['http://a.ml/vocabularies/document#encodes'][0];
+        const endpoints = enc['http://a.ml/vocabularies/http#endpoint'];
         const endpointId = id.substr(0, id.lastIndexOf('/'));
         const endpoint = endpoints.find((item) => item['@id'] === endpointId);
         const methods = endpoint['http://www.w3.org/ns/hydra/core#supportedOperation'];

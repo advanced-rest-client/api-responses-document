@@ -6,17 +6,6 @@
 
 A documentation for method responses based on AMF model
 
-<!---
-```
-<custom-element-demo>
-  <template>
-    <link rel="import" href="api-responses-document.html">
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
-
 ```html
 <api-responses-document></api-responses-document>
 ```

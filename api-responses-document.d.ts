@@ -18,7 +18,9 @@
 /// <reference path="../api-annotation-document/api-annotation-document.d.ts" />
 /// <reference path="../api-headers-document/api-headers-document.d.ts" />
 /// <reference path="../api-body-document/api-body-document.d.ts" />
-/// <reference path="api-responses-status-menu.d.ts" />
+/// <reference path="../amf-helper-mixin/amf-helper-mixin.d.ts" />
+/// <reference path="../paper-tabs/paper-tabs.d.ts" />
+/// <reference path="../paper-tabs/paper-tab.d.ts" />
 
 declare namespace ApiElements {
 
@@ -46,12 +48,9 @@ declare namespace ApiElements {
    * `--api-responses-document` | Mixin applied to this elment | `{}`
    * `--raml-docs-response-panel-container` | Mixin applied to element's container holding menu and docs together. | `{}`
    */
-  class ApiResponsesDocument extends Polymer.Element {
-
-    /**
-     * `raml-aware` scope property to use.
-     */
-    aware: string|null|undefined;
+  class ApiResponsesDocument extends
+    ApiElements.AmfHelperMixin(
+    Polymer.Element) {
 
     /**
      * Generated AMF json/ld model form the API spec.
@@ -62,6 +61,11 @@ declare namespace ApiElements {
      * It is only usefult for the element to resolve references.
      */
     amfModel: object|any[]|null;
+
+    /**
+     * `raml-aware` scope property to use.
+     */
+    aware: string|null|undefined;
 
     /**
      * The `returns` property of the method AMF model.
@@ -123,13 +127,27 @@ declare namespace ApiElements {
     readonly hasCustomProperties: boolean|null|undefined;
 
     /**
-     * Gets a signle scalar value from a model.
+     * Computes value for the `headers` property
      *
-     * @param model Amf model to extract the value from.
-     * @param key Model key to search for the value
-     * @returns Value for key
+     * @param response AMF model for Response
+     * @returns Headers model if defined.
      */
-    _getValue(model: object|null, key: String|null): any|null;
+    _computeHeaders(response: object|null): Array<object|null>|null|undefined;
+
+    /**
+     * Computes value for the `payload` property
+     *
+     * @param response AMF model for Response
+     * @returns Payload model if defined.
+     */
+    _computePayload(response: object|null): Array<object|null>|null|undefined;
+
+    /**
+     * Computes value for `hasCustomProperties` property.
+     *
+     * @param response AMF model for Response
+     */
+    _computeHasCustomProperties(response: object|null): Boolean|null;
 
     /**
      * Computes list of status codes for the selector.
@@ -154,36 +172,6 @@ declare namespace ApiElements {
     _statusMatches(item: object|null, status: String|null): Boolean|null;
 
     /**
-     * Computes value of `description` property.
-     *
-     * @param response AMF model for Response
-     * @returns Response description if defined.
-     */
-    _computeDescription(response: object|null): String|null|undefined;
-
-    /**
-     * Computes value for `hasDescription` property
-     *
-     * @param description Current value for description.
-     */
-    _computeHasDescription(description: String|null): Boolean|null;
-
-    /**
-     * Computes value for `hasCustomProperties` property.
-     *
-     * @param response AMF model for Response
-     */
-    _computeHasCustomProperties(response: object|null): Boolean|null;
-
-    /**
-     * Computes value for the `payload` property
-     *
-     * @param response AMF model for Response
-     * @returns Payload model if defined.
-     */
-    _computePayload(response: object|null): Array<object|null>|null|undefined;
-
-    /**
      * Computes value for `hasPayload` property
      *
      * @param payload Current value of `payload` property
@@ -191,19 +179,18 @@ declare namespace ApiElements {
     _computeHasPayload(payload: Array<object|null>|null): Boolean|null;
 
     /**
-     * Computes value for the `headers` property
-     *
-     * @param response AMF model for Response
-     * @returns Headers model if defined.
-     */
-    _computeHeaders(response: object|null): Array<object|null>|null|undefined;
-
-    /**
      * Computes value for `hasHeaders` property
      *
      * @param headers Current value of `headers` property
      */
     _computeHasHeaders(headers: Array<object|null>|null): Boolean|null;
+
+    /**
+     * Sets `selected` 0 when codes changes.
+     * It only sets selection if there's actually a value to render.
+     * It prohibits from performing additional computations for nothing.
+     */
+    _codesChanged(codes: any[]|null): void;
   }
 }
 
