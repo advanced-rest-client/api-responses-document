@@ -96,9 +96,13 @@ traits:
   get:
     displayName: List people
     is: [Paginated: {resourceType: AppPerson}]
+  delete:
+    responses:
+      204:
   put:
     displayName: Update a person
     responses:
+      204:
       200:
         (deprecated): This response type is deprecated and soon will be replaced.
         description: |
@@ -223,3 +227,9 @@ traits:
               {
               "status":"success"
               }
+/no-desc:
+  get:
+    responses:
+      200:
+      405:
+      201:
