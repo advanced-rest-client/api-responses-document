@@ -133,6 +133,11 @@ declare namespace ApiElements {
     readonly noDocs: boolean|null|undefined;
 
     /**
+     * Set to render a mobile friendly view.
+     */
+    narrow: boolean|null|undefined;
+
+    /**
      * Computes value for the `headers` property
      *
      * @param response AMF model for Response
