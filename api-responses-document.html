@@ -46,10 +46,10 @@
       </marked-element>
     </template>
     <template is="dom-if" if="[[hasHeaders]]">
-      <api-headers-document opened amf-model="[[amfModel]]" headers="[[headers]]"></api-headers-document>
+      <api-headers-document opened amf-model="[[amfModel]]" headers="[[headers]]" narrow="[[narrow]]"></api-headers-document>
     </template>
     <template is="dom-if" if="[[hasPayload]]">
-      <api-body-document amf-model="[[amfModel]]" body="[[payload]]" opened></api-body-document>
+      <api-body-document amf-model="[[amfModel]]" body="[[payload]]" narrow="[[narrow]]" opened></api-body-document>
     </template>
     <template is="dom-if" if="[[noDocs]]">
       <p class="no-info">No description provided</p>
@@ -192,7 +192,11 @@
         noDocs: {
           type: Boolean,
           computed: '_computeNoDocs(hasCustomProperties, hasHeaders, hasPayload, hasDescription)'
-        }
+        },
+        /**
+         * Set to render a mobile friendly view.
+         */
+         narrow: Boolean
       };
     }
     /**
