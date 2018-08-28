@@ -87,24 +87,13 @@
    * @appliesMixin ApiElements.AmfHelperMixin
    */
   class ApiResponsesDocument extends ApiElements.AmfHelperMixin(Polymer.Element) {
-    static get is() { return 'api-responses-document'; }
+    static get is() {return 'api-responses-document';}
     static get properties() {
       return {
         /**
          * `raml-aware` scope property to use.
          */
         aware: String,
-        /**
-         * Generated AMF json/ld model form the API spec.
-         * The element assumes the object of the first array item to be a
-         * type of `"http://raml.org/vocabularies/document#Document`
-         * on AMF vocabulary.
-         *
-         * It is only usefult for the element to resolve references.
-         *
-         * @type {Object|Array}
-         */
-        amfModel: Object,
         /**
          * The `returns` property of the method AMF model.
          *
@@ -118,7 +107,7 @@
          */
         codes: {
           type: Array,
-          computed: '_computeCodes(returns)',
+          computed: '_computeCodes(returns, amfModel)',
           observer: '_codesChanged'
         },
         /**
@@ -160,7 +149,7 @@
          */
         hasPayload: {
           type: Boolean,
-          computed: '_computeHasPayload(payload)'
+          computed: '_computeHasArrayValue(payload)'
         },
         /**
          * Computed value of AMF payload definition from `expects`
@@ -175,7 +164,7 @@
          */
         hasHeaders: {
           type: Boolean,
-          computed: '_computeHasHeaders(headers)'
+          computed: '_computeHasArrayValue(headers)'
         },
         /**
          * Computed value from current `selectedResponse`. True if the model
@@ -234,7 +223,7 @@
         return;
       }
       const status = codes[selected];
-      return returns.find((item) =>  this._statusMatches(item, status));
+      return returns.find((item) => this._statusMatches(item, status));
     }
     /**
      * Checks if given `item` matches `statusCode`
@@ -249,51 +238,6 @@
       }
       const value = this._getValue(item, this.ns.w3.hydra.core + 'statusCode');
       return value === status;
-    }
-    /**
-     * Computes value for `hasCustomProperties` property.
-     *
-     * @param {Object} response AMF model for Response
-     * @return {Boolean}
-     */
-    _computeHasCustomProperties(response) {
-      return (response && this.ns.raml.vocabularies.document + 'customDomainProperties' in response);
-    }
-    /**
-     * Computes value for the `payload` property
-     *
-     * @param {Object} response AMF model for Response
-     * @return {Array<Object>|undefined} Payload model if defined.
-     */
-    _computePayload(response) {
-      return response && response[this.ns.raml.vocabularies.http + 'payload'];
-    }
-    /**
-     * Computes value for `hasPayload` property
-     *
-     * @param {?Array<Object>} payload Current value of `payload` property
-     * @return {Boolean}
-     */
-    _computeHasPayload(payload) {
-      return !!(payload && payload.length);
-    }
-    /**
-     * Computes value for the `headers` property
-     *
-     * @param {Object} response AMF model for Response
-     * @return {Array<Object>|undefined} Headers model if defined.
-     */
-    _computeHeaders(response) {
-      return response && response[this.ns.raml.vocabularies.http + 'header'];
-    }
-    /**
-     * Computes value for `hasHeaders` property
-     *
-     * @param {?Array<Object>} headers Current value of `headers` property
-     * @return {Boolean}
-     */
-    _computeHasHeaders(headers) {
-      return !!(headers && headers.length);
     }
     /**
      * Sets `selected` 0 when codes changes.

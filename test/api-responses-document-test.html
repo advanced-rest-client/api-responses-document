@@ -106,7 +106,7 @@
     });
 
     test('Codes are computed in order', () => {
-      assert.deepEqual(element.codes, ['200','204','400']);
+      assert.deepEqual(element.codes, ['200', '204', '400']);
     });
 
     test('selected is computed', () => {
@@ -116,7 +116,7 @@
     test('selectedResponse is computed', () => {
       const response = element.selectedResponse;
       assert.typeOf(response, 'object', 'selectedResponse is an object');
-      assert.equal(response['@id'], 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Fpeople/put/200', 'Compyted correct response');
+      assert.equal(response['@id'], 'amf://id#248', 'Computed correct response');
     });
 
     test('Description is rendered', () => {
@@ -174,7 +174,7 @@
     test('selectedResponse is computed', () => {
       const response = element.selectedResponse;
       assert.typeOf(response, 'object', 'selectedResponse is an object');
-      assert.equal(response['@id'], 'file://demo/demo-api/demo-api.raml#/web-api/end-points/%2Fpeople/put/400');
+      assert.equal(response['@id'], 'amf://id#296');
     });
 
     test('Description is rendered', () => {
@@ -208,7 +208,7 @@
       assert.isFalse(element.noDocs);
     });
   });
-  
+
   suite('Empty response', () => {
     let element;
     let amf;

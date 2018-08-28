@@ -1,7 +1,7 @@
 {
   "name": "api-responses-document",
   "description": "A documentation for method responses based on AMF model",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "license": "Apache-2.0",
   "main": "api-responses-document.html",
   "keywords": [
@@ -32,7 +32,12 @@
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "api-navigation": "advanced-rest-client/api-navigation#^2.0.0",
-    "arc-polyfills": "advanced-rest-client/arc-polyfills#^0.1.11"
+    "arc-polyfills": "advanced-rest-client/arc-polyfills#^0.1.11",
+    "paper-dropdown-menu": "PolymerElements/paper-dropdown-menu#^2.0.3",
+    "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
+    "paper-item": "PolymerElements/paper-item#^2.1.0",
+    "web-animations-js": "web-animations/web-animations-js#^2.3",
+    "api-console-default-theme": "advanced-rest-client/api-console-default-theme#5.0.0-preview"
   },
   "repository": {
     "type": "git",
