@@ -25,233 +25,231 @@
 
   <script>
   /* global AmfLoader */
-  suite('Basic', () => {
-    test('Adds raml-aware to the DOM if aware is set', (done) => {
-      const element = fixture('Aware');
-      flush(() => {
-        const aware = element.shadowRoot.querySelector('raml-aware');
-        assert.ok(aware);
-        done();
+  function getResponseModel(element, endpointPath, methodIndex) {
+    const webapi = element._computeWebApi(element.amfModel);
+    const endpoint = element._computeEndpointByPath(webapi, endpointPath);
+    const opKey = element._getAmfKey(element.ns.w3.hydra.supportedOperation);
+    const method = element._ensureArray(endpoint[opKey])[methodIndex];
+    return element._computeReturns(method);
+  }
+
+  [
+    ['Full model', false],
+    ['Compact model', true]
+  ]
+  .forEach((item) => {
+    suite(item[0], () => {
+      suite('Basic', () => {
+        test('Adds raml-aware to the DOM if aware is set', (done) => {
+          const element = fixture('Aware');
+          flush(() => {
+            const aware = element.shadowRoot.querySelector('raml-aware');
+            assert.ok(aware);
+            done();
+          });
+        });
+
+        test('raml-aware is not in the DOM by default', (done) => {
+          const element = fixture('Basic');
+          flush(() => {
+            const aware = element.shadowRoot.querySelector('raml-aware');
+            assert.notOk(aware);
+            done();
+          });
+        });
+
+        test('selected is undefined by default', () => {
+          const element = fixture('Basic');
+          assert.isUndefined(element.selected);
+        });
+
+        test('api-annotation-document is not in the DOM', (done) => {
+          const element = fixture('Basic');
+          flush(() => {
+            const aware = element.shadowRoot.querySelector('api-annotation-document');
+            assert.notOk(aware);
+            done();
+          });
+        });
+
+        test('marked-element is not in the DOM', (done) => {
+          const element = fixture('Basic');
+          flush(() => {
+            const aware = element.shadowRoot.querySelector('marked-element');
+            assert.notOk(aware);
+            done();
+          });
+        });
+
+        test('api-headers-document is not in the DOM', (done) => {
+          const element = fixture('Basic');
+          flush(() => {
+            const aware = element.shadowRoot.querySelector('api-headers-document');
+            assert.notOk(aware);
+            done();
+          });
+        });
+
+        test('api-body-document is not in the DOM', (done) => {
+          const element = fixture('Basic');
+          flush(() => {
+            const aware = element.shadowRoot.querySelector('api-body-document');
+            assert.notOk(aware);
+            done();
+          });
+        });
       });
-    });
 
-    test('raml-aware is not in the DOM by default', (done) => {
-      const element = fixture('Basic');
-      flush(() => {
-        const aware = element.shadowRoot.querySelector('raml-aware');
-        assert.notOk(aware);
-        done();
+      suite('Fully defined response', () => {
+        let element;
+        setup((done) => {
+          AmfLoader.load(item[1])
+          .then((amf) => {
+            element = fixture('Basic');
+            element.amfModel = amf;
+            element.returns = getResponseModel(element, '/people', 2);
+            flush(() => done());
+          });
+        });
+
+        test('Codes are computed in order', () => {
+          assert.deepEqual(element.codes, ['200', '204', '400']);
+        });
+
+        test('selected is computed', () => {
+          assert.deepEqual(element.selected, 0);
+        });
+
+        test('selectedResponse is computed', () => {
+          const response = element.selectedResponse;
+          assert.typeOf(response, 'object', 'selectedResponse is an object');
+          const status = element._getValue(response, element.ns.schema.schemaName);
+          assert.equal(status, '200', 'Computed correct response');
+        });
+
+        test('Description is rendered', () => {
+          assert.typeOf(element.description, 'string', 'description is computed');
+          assert.isTrue(element.hasDescription, 'hasDescription is computed');
+          const node = element.shadowRoot.querySelector('marked-element');
+          assert.ok(node);
+        });
+
+        test('Annotations are rendered', () => {
+          assert.isTrue(element.hasCustomProperties, 'hasCustomProperties is computed');
+          const node = element.shadowRoot.querySelector('api-annotation-document');
+          assert.ok(node);
+        });
+
+        test('Headers are rendered', () => {
+          assert.typeOf(element.headers, 'array', 'headers is computed');
+          assert.isTrue(element.hasHeaders, 'hasHeaders is computed');
+          const node = element.shadowRoot.querySelector('api-headers-document');
+          assert.ok(node);
+        });
+
+        test('Payload is rendered', () => {
+          assert.typeOf(element.payload, 'array', 'headers is computed');
+          assert.isTrue(element.hasPayload, 'hasPayload is computed');
+          const node = element.shadowRoot.querySelector('api-body-document');
+          assert.ok(node);
+        });
+
+        test('noDocs is computed', () => {
+          assert.isFalse(element.noDocs);
+        });
       });
-    });
 
-    test('selected is undefined by default', () => {
-      const element = fixture('Basic');
-      assert.isUndefined(element.selected);
-    });
+      suite('Partially defined response', () => {
+        let element;
+        setup((done) => {
+          AmfLoader.load(item[1])
+          .then((amf) => {
+            element = fixture('Basic');
+            element.amfModel = amf;
+            element.returns = getResponseModel(element, '/people', 2);
+            element.selected = 2;
+            flush(() => done());
+          });
+        });
 
-    test('api-annotation-document is not in the DOM', (done) => {
-      const element = fixture('Basic');
-      flush(() => {
-        const aware = element.shadowRoot.querySelector('api-annotation-document');
-        assert.notOk(aware);
-        done();
+        test('selectedResponse is computed', () => {
+          const response = element.selectedResponse;
+          assert.typeOf(response, 'object', 'selectedResponse is an object');
+          const status = element._getValue(response, element.ns.schema.schemaName);
+          assert.equal(status, 400);
+        });
+
+        test('Description is rendered', () => {
+          assert.typeOf(element.description, 'string', 'description is computed');
+          assert.isTrue(element.hasDescription, 'hasDescription is computed');
+          const node = element.shadowRoot.querySelector('marked-element');
+          assert.ok(node);
+        });
+
+        test('Annotations are not rendered', () => {
+          assert.isFalse(element.hasCustomProperties, 'hasCustomProperties is computed');
+          const node = element.shadowRoot.querySelector('api-annotation-document');
+          assert.notOk(node);
+        });
+
+        test('Headers are not rendered', () => {
+          assert.isUndefined(element.headers, 'headers is computed');
+          assert.isFalse(element.hasHeaders, 'hasHeaders is computed');
+          const node = element.shadowRoot.querySelector('api-headers-document');
+          assert.notOk(node);
+        });
+
+        test('Payload is rendered', () => {
+          assert.typeOf(element.payload, 'array', 'headers is computed');
+          assert.isTrue(element.hasPayload, 'hasPayload is computed');
+          const node = element.shadowRoot.querySelector('api-body-document');
+          assert.ok(node);
+        });
+
+        test('noDocs is computed', () => {
+          assert.isFalse(element.noDocs);
+        });
       });
-    });
 
-    test('marked-element is not in the DOM', (done) => {
-      const element = fixture('Basic');
-      flush(() => {
-        const aware = element.shadowRoot.querySelector('marked-element');
-        assert.notOk(aware);
-        done();
-      });
-    });
+      suite('Empty response', () => {
+        let element;
+        setup((done) => {
+          AmfLoader.load(item[1])
+          .then((amf) => {
+            element = fixture('Basic');
+            element.amfModel = amf;
+            element.returns = getResponseModel(element, '/no-desc', 0);
+            flush(() => done());
+          });
+        });
 
-    test('api-headers-document is not in the DOM', (done) => {
-      const element = fixture('Basic');
-      flush(() => {
-        const aware = element.shadowRoot.querySelector('api-headers-document');
-        assert.notOk(aware);
-        done();
-      });
-    });
+        test('hasDescription is not computed', () => {
+          assert.isUndefined(element.hasDescription);
+        });
 
-    test('api-body-document is not in the DOM', (done) => {
-      const element = fixture('Basic');
-      flush(() => {
-        const aware = element.shadowRoot.querySelector('api-body-document');
-        assert.notOk(aware);
-        done();
-      });
-    });
-  });
+        test('hasPayload is not computed', () => {
+          assert.isUndefined(element.hasPayload);
+        });
 
-  suite('Fully defined response', () => {
-    let element;
-    let amf;
-    let responses;
-    suiteSetup(() => {
-      return AmfLoader.load(0, 2)
-      .then((data) => {
-        amf = data[0];
-        responses = data[1];
-      });
-    });
+        test('hasHeaders is not computed', () => {
+          assert.isUndefined(element.hasHeaders);
+        });
 
-    setup((done) => {
-      element = fixture('Basic');
-      element.amfModel = amf;
-      element.returns = responses;
-      flush(() => done());
-    });
+        test('hasCustomProperties is computed', () => {
+          assert.isFalse(element.hasCustomProperties);
+        });
 
-    test('Codes are computed in order', () => {
-      assert.deepEqual(element.codes, ['200', '204', '400']);
-    });
+        test('noDocs is computed', () => {
+          assert.isTrue(element.noDocs);
+        });
 
-    test('selected is computed', () => {
-      assert.deepEqual(element.selected, 0);
-    });
-
-    test('selectedResponse is computed', () => {
-      const response = element.selectedResponse;
-      assert.typeOf(response, 'object', 'selectedResponse is an object');
-      assert.equal(response['@id'], 'amf://id#248', 'Computed correct response');
-    });
-
-    test('Description is rendered', () => {
-      assert.typeOf(element.description, 'string', 'description is computed');
-      assert.isTrue(element.hasDescription, 'hasDescription is computed');
-      const node = element.shadowRoot.querySelector('marked-element');
-      assert.ok(node);
-    });
-
-    test('Annotations are rendered', () => {
-      assert.isTrue(element.hasCustomProperties, 'hasCustomProperties is computed');
-      const node = element.shadowRoot.querySelector('api-annotation-document');
-      assert.ok(node);
-    });
-
-    test('Headers are rendered', () => {
-      assert.typeOf(element.headers, 'array', 'headers is computed');
-      assert.isTrue(element.hasHeaders, 'hasHeaders is computed');
-      const node = element.shadowRoot.querySelector('api-headers-document');
-      assert.ok(node);
-    });
-
-    test('Payload is rendered', () => {
-      assert.typeOf(element.payload, 'array', 'headers is computed');
-      assert.isTrue(element.hasPayload, 'hasPayload is computed');
-      const node = element.shadowRoot.querySelector('api-body-document');
-      assert.ok(node);
-    });
-
-    test('noDocs is computed', () => {
-      assert.isFalse(element.noDocs);
-    });
-  });
-
-  suite('Partially defined response', () => {
-    let element;
-    let amf;
-    let responses;
-    suiteSetup(() => {
-      return AmfLoader.load(0, 2)
-      .then((data) => {
-        amf = data[0];
-        responses = data[1];
-      });
-    });
-
-    setup((done) => {
-      element = fixture('Basic');
-      element.amfModel = amf;
-      element.returns = responses;
-      element.selected = 2;
-      flush(() => done());
-    });
-
-    test('selectedResponse is computed', () => {
-      const response = element.selectedResponse;
-      assert.typeOf(response, 'object', 'selectedResponse is an object');
-      assert.equal(response['@id'], 'amf://id#296');
-    });
-
-    test('Description is rendered', () => {
-      assert.typeOf(element.description, 'string', 'description is computed');
-      assert.isTrue(element.hasDescription, 'hasDescription is computed');
-      const node = element.shadowRoot.querySelector('marked-element');
-      assert.ok(node);
-    });
-
-    test('Annotations are not rendered', () => {
-      assert.isFalse(element.hasCustomProperties, 'hasCustomProperties is computed');
-      const node = element.shadowRoot.querySelector('api-annotation-document');
-      assert.notOk(node);
-    });
-
-    test('Headers are not rendered', () => {
-      assert.isUndefined(element.headers, 'headers is computed');
-      assert.isFalse(element.hasHeaders, 'hasHeaders is computed');
-      const node = element.shadowRoot.querySelector('api-headers-document');
-      assert.notOk(node);
-    });
-
-    test('Payload is rendered', () => {
-      assert.typeOf(element.payload, 'array', 'headers is computed');
-      assert.isTrue(element.hasPayload, 'hasPayload is computed');
-      const node = element.shadowRoot.querySelector('api-body-document');
-      assert.ok(node);
-    });
-
-    test('noDocs is computed', () => {
-      assert.isFalse(element.noDocs);
-    });
-  });
-
-  suite('Empty response', () => {
-    let element;
-    let amf;
-    let responses;
-    suiteSetup(() => {
-      return AmfLoader.load(7, 0)
-      .then((data) => {
-        amf = data[0];
-        responses = data[1];
-      });
-    });
-
-    setup(() => {
-      element = fixture('Basic');
-      element.amfModel = amf;
-      element.returns = responses;
-    });
-
-    test('hasDescription is not computed', () => {
-      assert.isUndefined(element.hasDescription);
-    });
-
-    test('hasPayload is not computed', () => {
-      assert.isUndefined(element.hasPayload);
-    });
-
-    test('hasHeaders is not computed', () => {
-      assert.isUndefined(element.hasHeaders);
-    });
-
-    test('hasCustomProperties is computed', () => {
-      assert.isFalse(element.hasCustomProperties);
-    });
-
-    test('noDocs is computed', () => {
-      assert.isTrue(element.noDocs);
-    });
-
-    test('No info message is rendered', (done) => {
-      flush(() => {
-        const node = element.shadowRoot.querySelector('.no-info');
-        assert.ok(node);
-        done();
+        test('No info message is rendered', (done) => {
+          flush(() => {
+            const node = element.shadowRoot.querySelector('.no-info');
+            assert.ok(node);
+            done();
+          });
+        });
       });
     });
   });

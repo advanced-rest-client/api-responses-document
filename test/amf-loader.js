@@ -1,7 +1,5 @@
 const AmfLoader = {};
-AmfLoader.load = function(endpointIndex, methodIndex, compact) {
-  endpointIndex = endpointIndex || 0;
-  methodIndex = methodIndex || 0;
+AmfLoader.load = function(compact) {
   const file = '/demo-api' + (compact ? '-compact' : '') + '.json';
   const url = location.protocol + '//' + location.host +
     location.pathname.substr(0, location.pathname.lastIndexOf('/'))
@@ -16,34 +14,7 @@ AmfLoader.load = function(endpointIndex, methodIndex, compact) {
         reject(e);
         return;
       }
-      const original = data;
-      if (data instanceof Array) {
-        data = data[0];
-      }
-      const encKey = compact ? 'doc:encodes' : 'http://a.ml/vocabularies/document#encodes';
-      let encodes = data[encKey];
-      if (encodes instanceof Array) {
-        encodes = encodes[0];
-      }
-      const endKey = compact ? 'raml-http:endpoint' : 'http://a.ml/vocabularies/http#endpoint';
-      let endpoints = encodes[endKey];
-      if (endpoints && !(endpoints instanceof Array)) {
-        endpoints = [endpoints];
-      }
-      const endpoint = endpoints[endpointIndex];
-      const opKey = compact ? 'hydra:supportedOperation':
-        'http://www.w3.org/ns/hydra/core#supportedOperation';
-      let methods = endpoint[opKey];
-      if (methods && !(methods instanceof Array)) {
-        methods = [methods];
-      }
-      const method = methods[methodIndex];
-      const retKey = compact ? 'hydra:returns' : 'http://www.w3.org/ns/hydra/core#returns';
-      let returns = method[retKey];
-      if (returns && !(returns instanceof Array)) {
-        returns = [returns];
-      }
-      resolve([original, returns]);
+      resolve(data);
     });
     xhr.addEventListener('error',
       () => reject(new Error('Unable to load model file')));
