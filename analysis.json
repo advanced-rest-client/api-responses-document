@@ -4,7 +4,7 @@
     {
       "description": "`api-responses-document`\n\nA documentation for method responses based on AMF model.\n\nIt renders a selector of available status codes in the responses array.\nThis is computed from `returns` property which must be an array\nas a value of AMF's `http://www.w3.org/ns/hydra/core#returns` property\nof the `method` shape.\n\nStatus codes are sorted before rendering.\n\nIn the documentation part it renders annotations (AMF custom proeprties)\nadded to the response, headers and body.\n\n## Styling\n\n`<api-responses-document>` provides the following custom properties and mixins for styling:\n\nCustom property | Description | Default\n----------------|-------------|----------\n`--api-responses-document` | Mixin applied to this elment | `{}`\n`--no-info-message` | Theme mixin, applied to empty info message | `{}`",
       "summary": "",
-      "path": "api-responses-document.html",
+      "path": "api-responses-document.js",
       "properties": [
         {
           "name": "amfModel",
@@ -12,13 +12,13 @@
           "description": "Generated AMF json/ld model form the API spec.\nThe element assumes the object of the first array item to be a\ntype of `\"http://raml.org/vocabularies/document#Document`\non AMF vocabulary.\n\nIt is only usefult for the element to resolve references.",
           "privacy": "public",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 129,
+              "line": 120,
               "column": 8
             },
             "end": {
-              "line": 129,
+              "line": 120,
               "column": 32
             }
           },
@@ -35,13 +35,13 @@
           "description": "A namespace for AMF model",
           "privacy": "public",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 133,
+              "line": 124,
               "column": 8
             },
             "end": {
-              "line": 139,
+              "line": 130,
               "column": 9
             }
           },
@@ -60,12 +60,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 95,
-              "column": 8
+              "line": 103,
+              "column": 6
             },
             "end": {
-              "line": 95,
-              "column": 21
+              "line": 103,
+              "column": 19
             }
           },
           "metadata": {
@@ -81,12 +81,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 101,
-              "column": 8
+              "line": 109,
+              "column": 6
             },
             "end": {
-              "line": 101,
-              "column": 22
+              "line": 109,
+              "column": 20
             }
           },
           "metadata": {
@@ -102,12 +102,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 107,
-              "column": 8
+              "line": 115,
+              "column": 6
             },
             "end": {
-              "line": 111,
-              "column": 9
+              "line": 119,
+              "column": 7
             }
           },
           "metadata": {
@@ -125,12 +125,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 115,
-              "column": 8
+              "line": 123,
+              "column": 6
             },
             "end": {
-              "line": 115,
-              "column": 24
+              "line": 123,
+              "column": 22
             }
           },
           "metadata": {
@@ -146,12 +146,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 120,
-              "column": 8
+              "line": 128,
+              "column": 6
             },
             "end": {
-              "line": 123,
-              "column": 9
+              "line": 131,
+              "column": 7
             }
           },
           "metadata": {
@@ -168,12 +168,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 127,
-              "column": 8
+              "line": 135,
+              "column": 6
             },
             "end": {
-              "line": 130,
-              "column": 9
+              "line": 138,
+              "column": 7
             }
           },
           "metadata": {
@@ -190,12 +190,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 134,
-              "column": 8
+              "line": 142,
+              "column": 6
             },
             "end": {
-              "line": 137,
-              "column": 9
+              "line": 145,
+              "column": 7
             }
           },
           "metadata": {
@@ -212,12 +212,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 142,
-              "column": 8
+              "line": 150,
+              "column": 6
             },
             "end": {
-              "line": 145,
-              "column": 9
+              "line": 153,
+              "column": 7
             }
           },
           "metadata": {
@@ -234,12 +234,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 149,
-              "column": 8
+              "line": 157,
+              "column": 6
             },
             "end": {
-              "line": 152,
-              "column": 9
+              "line": 160,
+              "column": 7
             }
           },
           "metadata": {
@@ -256,12 +256,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 157,
-              "column": 8
+              "line": 165,
+              "column": 6
             },
             "end": {
-              "line": 160,
-              "column": 9
+              "line": 168,
+              "column": 7
             }
           },
           "metadata": {
@@ -278,12 +278,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 164,
-              "column": 8
+              "line": 172,
+              "column": 6
             },
             "end": {
-              "line": 167,
-              "column": 9
+              "line": 175,
+              "column": 7
             }
           },
           "metadata": {
@@ -300,12 +300,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 172,
-              "column": 8
+              "line": 180,
+              "column": 6
             },
             "end": {
-              "line": 175,
-              "column": 9
+              "line": 183,
+              "column": 7
             }
           },
           "metadata": {
@@ -322,12 +322,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 180,
-              "column": 8
+              "line": 188,
+              "column": 6
             },
             "end": {
-              "line": 183,
-              "column": 9
+              "line": 191,
+              "column": 7
             }
           },
           "metadata": {
@@ -344,12 +344,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 187,
-              "column": 9
+              "line": 195,
+              "column": 7
             },
             "end": {
-              "line": 187,
-              "column": 24
+              "line": 195,
+              "column": 22
             }
           },
           "metadata": {
@@ -365,13 +365,13 @@
           "description": "Returns compact model key for given value.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 148,
+              "line": 139,
               "column": 4
             },
             "end": {
-              "line": 180,
+              "line": 171,
               "column": 5
             }
           },
@@ -394,13 +394,13 @@
           "description": "Ensures that the model is AMF object.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 187,
+              "line": 178,
               "column": 4
             },
             "end": {
-              "line": 197,
+              "line": 188,
               "column": 5
             }
           },
@@ -423,13 +423,13 @@
           "description": "Ensures that the value is an array.\nIt returns undefined when there's no value.\nIt returns the same array if the value is already an array.\nIt returns new array of the item is not an array.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 207,
+              "line": 198,
               "column": 4
             },
             "end": {
-              "line": 215,
+              "line": 206,
               "column": 5
             }
           },
@@ -451,13 +451,13 @@
           "description": "Gets a signle scalar value from a model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 222,
+              "line": 213,
               "column": 4
             },
             "end": {
-              "line": 240,
+              "line": 231,
               "column": 5
             }
           },
@@ -485,13 +485,13 @@
           "description": "Gets values from a model as an array of `@value` properties.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 247,
+              "line": 238,
               "column": 4
             },
             "end": {
-              "line": 254,
+              "line": 245,
               "column": 5
             }
           },
@@ -519,13 +519,13 @@
           "description": "Checks if a model has a type.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 261,
+              "line": 252,
               "column": 4
             },
             "end": {
-              "line": 273,
+              "line": 264,
               "column": 5
             }
           },
@@ -553,13 +553,13 @@
           "description": "Checks if a shape has a property.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 280,
+              "line": 271,
               "column": 4
             },
             "end": {
-              "line": 283,
+              "line": 274,
               "column": 5
             }
           },
@@ -586,13 +586,13 @@
           "description": "Computes array value of a property in a model (shape).",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 291,
+              "line": 282,
               "column": 4
             },
             "end": {
-              "line": 301,
+              "line": 292,
               "column": 5
             }
           },
@@ -619,13 +619,13 @@
           "description": "Computes a value of a property in a model (shape).\nIt takes first value of a property, if exists.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 310,
+              "line": 301,
               "column": 4
             },
             "end": {
-              "line": 314,
+              "line": 305,
               "column": 5
             }
           },
@@ -652,13 +652,13 @@
           "description": "Tests if a passed argumet exists.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 321,
+              "line": 312,
               "column": 4
             },
             "end": {
-              "line": 323,
+              "line": 314,
               "column": 5
             }
           },
@@ -680,13 +680,13 @@
           "description": "Computes if passed argument is an array and has a value.\nIt does not check for type or value of the array items.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 330,
+              "line": 321,
               "column": 4
             },
             "end": {
-              "line": 332,
+              "line": 323,
               "column": 5
             }
           },
@@ -708,13 +708,13 @@
           "description": "Computes description for a shape.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 338,
+              "line": 329,
               "column": 4
             },
             "end": {
-              "line": 340,
+              "line": 331,
               "column": 5
             }
           },
@@ -737,13 +737,13 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 342,
+              "line": 333,
               "column": 4
             },
             "end": {
-              "line": 344,
+              "line": 335,
               "column": 5
             }
           },
@@ -760,13 +760,13 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 346,
+              "line": 337,
               "column": 4
             },
             "end": {
-              "line": 348,
+              "line": 339,
               "column": 5
             }
           },
@@ -783,13 +783,13 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 350,
+              "line": 341,
               "column": 4
             },
             "end": {
-              "line": 352,
+              "line": 343,
               "column": 5
             }
           },
@@ -806,13 +806,13 @@
           "description": "Computes value for `serverVariables` property.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 359,
+              "line": 350,
               "column": 4
             },
             "end": {
-              "line": 361,
+              "line": 352,
               "column": 5
             }
           },
@@ -835,13 +835,13 @@
           "description": "Computes value for `endpointVariables` property.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 368,
+              "line": 359,
               "column": 4
             },
             "end": {
-              "line": 370,
+              "line": 361,
               "column": 5
             }
           },
@@ -864,13 +864,13 @@
           "description": "Computes value for the `payload` property",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 377,
+              "line": 368,
               "column": 4
             },
             "end": {
-              "line": 379,
+              "line": 370,
               "column": 5
             }
           },
@@ -893,7 +893,35 @@
           "description": "Computes value for `returns` property",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
+            "start": {
+              "line": 377,
+              "column": 4
+            },
+            "end": {
+              "line": 379,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "method",
+              "type": "Object",
+              "description": "AMF `supportedOperation` model"
+            }
+          ],
+          "return": {
+            "type": "(Array.<Object> | undefined)"
+          },
+          "inheritedFrom": "ApiElements.AmfHelperMixin"
+        },
+        {
+          "name": "_computeSecurity",
+          "description": "Computes value for `security` property",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 386,
               "column": 4
@@ -917,45 +945,17 @@
           "inheritedFrom": "ApiElements.AmfHelperMixin"
         },
         {
-          "name": "_computeSecurity",
-          "description": "Computes value for `security` property",
+          "name": "_computeHasCustomProperties",
+          "description": "Computes value for `hasCustomProperties` property.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 395,
               "column": 4
             },
             "end": {
               "line": 397,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "method",
-              "type": "Object",
-              "description": "AMF `supportedOperation` model"
-            }
-          ],
-          "return": {
-            "type": "(Array.<Object> | undefined)"
-          },
-          "inheritedFrom": "ApiElements.AmfHelperMixin"
-        },
-        {
-          "name": "_computeHasCustomProperties",
-          "description": "Computes value for `hasCustomProperties` property.",
-          "privacy": "protected",
-          "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
-            "start": {
-              "line": 404,
-              "column": 4
-            },
-            "end": {
-              "line": 406,
               "column": 5
             }
           },
@@ -977,13 +977,13 @@
           "description": "Computes API version from the AMF model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 413,
+              "line": 404,
               "column": 4
             },
             "end": {
-              "line": 419,
+              "line": 410,
               "column": 5
             }
           },
@@ -1004,13 +1004,13 @@
           "description": "Computes model's `encodes` property.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 426,
+              "line": 417,
               "column": 4
             },
             "end": {
-              "line": 438,
+              "line": 429,
               "column": 5
             }
           },
@@ -1033,13 +1033,13 @@
           "description": "Computes list of declarations in the AMF api model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 445,
+              "line": 436,
               "column": 4
             },
             "end": {
-              "line": 458,
+              "line": 449,
               "column": 5
             }
           },
@@ -1062,13 +1062,13 @@
           "description": "Computes list of references in the AMF api model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 465,
+              "line": 456,
               "column": 4
             },
             "end": {
-              "line": 478,
+              "line": 469,
               "column": 5
             }
           },
@@ -1091,13 +1091,13 @@
           "description": "Computes AMF's `http://schema.org/WebAPI` model",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 485,
+              "line": 476,
               "column": 4
             },
             "end": {
-              "line": 493,
+              "line": 484,
               "column": 5
             }
           },
@@ -1120,13 +1120,13 @@
           "description": "Computes value for `server` property that is later used with other computations.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 500,
+              "line": 491,
               "column": 4
             },
             "end": {
-              "line": 508,
+              "line": 499,
               "column": 5
             }
           },
@@ -1149,13 +1149,13 @@
           "description": "Computes endpoint's URI based on `amfModel` and `endpoint` models.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 518,
+              "line": 509,
               "column": 4
             },
             "end": {
-              "line": 530,
+              "line": 521,
               "column": 5
             }
           },
@@ -1193,13 +1193,13 @@
           "description": "Computes base URI value from either `baseUri`, `iron-meta` with\n`ApiBaseUri` key or `amfModel` value (in this order).",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 540,
+              "line": 531,
               "column": 4
             },
             "end": {
-              "line": 551,
+              "line": 542,
               "column": 5
             }
           },
@@ -1232,13 +1232,13 @@
           "description": "Computes base URI from AMF model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 561,
+              "line": 552,
               "column": 4
             },
             "end": {
-              "line": 565,
+              "line": 556,
               "column": 5
             }
           },
@@ -1266,13 +1266,13 @@
           "description": "A function that makes sure that the URL has a scheme definition.\nIf no supported protocols information is available it assumes `http`.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 577,
+              "line": 568,
               "column": 4
             },
             "end": {
-              "line": 591,
+              "line": 582,
               "column": 5
             }
           },
@@ -1300,13 +1300,13 @@
           "description": "Computes supported protocols by the API.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 598,
+              "line": 589,
               "column": 4
             },
             "end": {
-              "line": 604,
+              "line": 595,
               "column": 5
             }
           },
@@ -1328,13 +1328,13 @@
           "description": "Computes value for the `expects` property.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 611,
+              "line": 602,
               "column": 4
             },
             "end": {
-              "line": 619,
+              "line": 610,
               "column": 5
             }
           },
@@ -1356,13 +1356,13 @@
           "description": "Tries to find an example value (whether it's default value or from an\nexample) to put it into snippet's values.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 627,
+              "line": 618,
               "column": 4
             },
             "end": {
-              "line": 648,
+              "line": 639,
               "column": 5
             }
           },
@@ -1384,13 +1384,13 @@
           "description": "Computes list of endpoints from a WebApi model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 654,
+              "line": 645,
               "column": 4
             },
             "end": {
-              "line": 660,
+              "line": 651,
               "column": 5
             }
           },
@@ -1412,13 +1412,13 @@
           "description": "Computes model for an endpoint documentation.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 668,
+              "line": 659,
               "column": 4
             },
             "end": {
-              "line": 671,
+              "line": 665,
               "column": 5
             }
           },
@@ -1446,13 +1446,13 @@
           "description": "Computes model for an endpoint documentation using it's path.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 679,
+              "line": 673,
               "column": 4
             },
             "end": {
-              "line": 690,
+              "line": 687,
               "column": 5
             }
           },
@@ -1480,13 +1480,13 @@
           "description": "Computes method for the method documentation.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 698,
+              "line": 695,
               "column": 4
             },
             "end": {
-              "line": 704,
+              "line": 701,
               "column": 5
             }
           },
@@ -1514,13 +1514,13 @@
           "description": "Computes list of operations in an endpoint",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 711,
+              "line": 708,
               "column": 4
             },
             "end": {
-              "line": 718,
+              "line": 715,
               "column": 5
             }
           },
@@ -1548,9 +1548,9 @@
           "description": "Computes an endpoint for a method.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 725,
+              "line": 722,
               "column": 4
             },
             "end": {
@@ -1582,7 +1582,7 @@
           "description": "Computes a list of methods for an endpoint that contains a method with\ngiven id.",
           "privacy": "private",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 755,
               "column": 4
@@ -1616,7 +1616,7 @@
           "description": "Computes a type documentation model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 771,
               "column": 4
@@ -1655,7 +1655,7 @@
           "description": "Computes a type model from a reference (library for example).",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 795,
               "column": 4
@@ -1689,7 +1689,7 @@
           "description": "Computes model for selected security definition.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 818,
               "column": 4
@@ -1723,7 +1723,7 @@
           "description": "Computes a documentation model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 831,
               "column": 4
@@ -1757,7 +1757,7 @@
           "description": "Resolves a reference to an external fragment.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 845,
               "column": 4
@@ -1786,7 +1786,7 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 896,
               "column": 4
@@ -1812,7 +1812,7 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 920,
               "column": 4
@@ -1838,7 +1838,7 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 939,
               "column": 4
@@ -1864,7 +1864,7 @@
           "description": "Gets string value for an example data model.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 959,
               "column": 4
@@ -1897,7 +1897,7 @@
           "description": "Computes an example from example structured value.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 979,
               "column": 4
@@ -1926,7 +1926,7 @@
           "description": "Computes value with propert data type for a structured example.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
               "line": 1006,
               "column": 4
@@ -1956,12 +1956,12 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 196,
-              "column": 4
+              "line": 204,
+              "column": 2
             },
             "end": {
-              "line": 209,
-              "column": 5
+              "line": 217,
+              "column": 3
             }
           },
           "metadata": {},
@@ -1982,12 +1982,12 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 220,
-              "column": 4
+              "line": 228,
+              "column": 2
             },
             "end": {
-              "line": 226,
-              "column": 5
+              "line": 234,
+              "column": 3
             }
           },
           "metadata": {},
@@ -2015,12 +2015,12 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 234,
-              "column": 4
+              "line": 242,
+              "column": 2
             },
             "end": {
-              "line": 240,
-              "column": 5
+              "line": 248,
+              "column": 3
             }
           },
           "metadata": {},
@@ -2046,12 +2046,12 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 248,
-              "column": 4
+              "line": 256,
+              "column": 2
             },
             "end": {
-              "line": 252,
-              "column": 5
+              "line": 260,
+              "column": 3
             }
           },
           "metadata": {},
@@ -2071,12 +2071,12 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 254,
-              "column": 4
+              "line": 262,
+              "column": 2
             },
             "end": {
-              "line": 256,
-              "column": 5
+              "line": 264,
+              "column": 3
             }
           },
           "metadata": {},
@@ -2106,12 +2106,12 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 88,
-          "column": 2
+          "line": 44,
+          "column": 7
         },
         "end": {
-          "line": 257,
-          "column": 3
+          "line": 265,
+          "column": 1
         }
       },
       "privacy": "public",
@@ -2122,13 +2122,13 @@
           "name": "amf-model",
           "description": "Generated AMF json/ld model form the API spec.\nThe element assumes the object of the first array item to be a\ntype of `\"http://raml.org/vocabularies/document#Document`\non AMF vocabulary.\n\nIt is only usefult for the element to resolve references.",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 129,
+              "line": 120,
               "column": 8
             },
             "end": {
-              "line": 129,
+              "line": 120,
               "column": 32
             }
           },
@@ -2140,13 +2140,13 @@
           "name": "ns",
           "description": "A namespace for AMF model",
           "sourceRange": {
-            "file": "../amf-helper-mixin/amf-helper-mixin.html",
+            "file": "../@api-components/amf-helper-mixin/amf-helper-mixin.js",
             "start": {
-              "line": 133,
+              "line": 124,
               "column": 8
             },
             "end": {
-              "line": 139,
+              "line": 130,
               "column": 9
             }
           },
@@ -2159,12 +2159,12 @@
           "description": "`raml-aware` scope property to use.",
           "sourceRange": {
             "start": {
-              "line": 95,
-              "column": 8
+              "line": 103,
+              "column": 6
             },
             "end": {
-              "line": 95,
-              "column": 21
+              "line": 103,
+              "column": 19
             }
           },
           "metadata": {},
@@ -2175,12 +2175,12 @@
           "description": "The `returns` property of the method AMF model.",
           "sourceRange": {
             "start": {
-              "line": 101,
-              "column": 8
+              "line": 109,
+              "column": 6
             },
             "end": {
-              "line": 101,
-              "column": 22
+              "line": 109,
+              "column": 20
             }
           },
           "metadata": {},
@@ -2191,12 +2191,12 @@
           "description": "Computed value of status codes from `returns` property.",
           "sourceRange": {
             "start": {
-              "line": 107,
-              "column": 8
+              "line": 115,
+              "column": 6
             },
             "end": {
-              "line": 111,
-              "column": 9
+              "line": 119,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2207,12 +2207,12 @@
           "description": "Selected index of a status code from the selector.",
           "sourceRange": {
             "start": {
-              "line": 115,
-              "column": 8
+              "line": 123,
+              "column": 6
             },
             "end": {
-              "line": 115,
-              "column": 24
+              "line": 123,
+              "column": 22
             }
           },
           "metadata": {},
@@ -2223,12 +2223,12 @@
           "description": "Currently selected response object as AMF model os a type of\n`http://raml.org/vocabularies/http#Response`",
           "sourceRange": {
             "start": {
-              "line": 120,
-              "column": 8
+              "line": 128,
+              "column": 6
             },
             "end": {
-              "line": 123,
-              "column": 9
+              "line": 131,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2239,12 +2239,12 @@
           "description": "Computed value of method description from `method` property.",
           "sourceRange": {
             "start": {
-              "line": 127,
-              "column": 8
+              "line": 135,
+              "column": 6
             },
             "end": {
-              "line": 130,
-              "column": 9
+              "line": 138,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2255,12 +2255,12 @@
           "description": "Computed value, true if `description` is set.",
           "sourceRange": {
             "start": {
-              "line": 134,
-              "column": 8
+              "line": 142,
+              "column": 6
             },
             "end": {
-              "line": 137,
-              "column": 9
+              "line": 145,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2271,12 +2271,12 @@
           "description": "Computed value of AMF payload definition from `expects`\nproperty.",
           "sourceRange": {
             "start": {
-              "line": 142,
-              "column": 8
+              "line": 150,
+              "column": 6
             },
             "end": {
-              "line": 145,
-              "column": 9
+              "line": 153,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2287,12 +2287,12 @@
           "description": "Computed value, true if `payload` has values.",
           "sourceRange": {
             "start": {
-              "line": 149,
-              "column": 8
+              "line": 157,
+              "column": 6
             },
             "end": {
-              "line": 152,
-              "column": 9
+              "line": 160,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2303,12 +2303,12 @@
           "description": "Computed value of AMF payload definition from `expects`\nproperty.",
           "sourceRange": {
             "start": {
-              "line": 157,
-              "column": 8
+              "line": 165,
+              "column": 6
             },
             "end": {
-              "line": 160,
-              "column": 9
+              "line": 168,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2319,12 +2319,12 @@
           "description": "Computed value, true if `payload` has values.",
           "sourceRange": {
             "start": {
-              "line": 164,
-              "column": 8
+              "line": 172,
+              "column": 6
             },
             "end": {
-              "line": 167,
-              "column": 9
+              "line": 175,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2335,12 +2335,12 @@
           "description": "Computed value from current `selectedResponse`. True if the model\ncontains custom properties (annotations in RAML).",
           "sourceRange": {
             "start": {
-              "line": 172,
-              "column": 8
+              "line": 180,
+              "column": 6
             },
             "end": {
-              "line": 175,
-              "column": 9
+              "line": 183,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2351,12 +2351,12 @@
           "description": "Computed value, true when a status is defined but does not\ncontain any documentation.",
           "sourceRange": {
             "start": {
-              "line": 180,
-              "column": 8
+              "line": 188,
+              "column": 6
             },
             "end": {
-              "line": 183,
-              "column": 9
+              "line": 191,
+              "column": 7
             }
           },
           "metadata": {},
@@ -2367,12 +2367,12 @@
           "description": "Set to render a mobile friendly view.",
           "sourceRange": {
             "start": {
-              "line": 187,
-              "column": 9
+              "line": 195,
+              "column": 7
             },
             "end": {
-              "line": 187,
-              "column": 24
+              "line": 195,
+              "column": 22
             }
           },
           "metadata": {},
