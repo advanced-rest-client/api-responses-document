@@ -8,7 +8,7 @@
     "url": "git://github.com/advanced-rest-client/api-responses-document.git"
   },
   "name": "@api-components/api-responses-document",
-  "version": "3.0.0-preview.1",
+  "version": "3.0.0-preview.2",
   "license": "Apache-2.0",
   "main": "api-responses-document.js",
   "authors": [
