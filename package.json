@@ -57,8 +57,6 @@
     "@api-components/raml-aware": "^3.0.0-preview.1",
     "@polymer/iron-flex-layout": "^3.0.0",
     "@polymer/marked-element": "^3.0.0",
-    "@polymer/paper-item": "^3.0.0",
-    "@polymer/paper-listbox": "^3.0.0",
     "@polymer/paper-tabs": "^3.0.0",
     "@polymer/polymer": "^3.2.0"
   }
