@@ -1,16 +1,16 @@
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-import '@polymer/polymer/lib/elements/dom-repeat.js';
-import '@polymer/polymer/lib/elements/dom-if.js';
-import '@api-components/raml-aware/raml-aware.js';
-import '@polymer/iron-flex-layout/iron-flex-layout.js';
-import '@advanced-rest-client/markdown-styles/markdown-styles.js';
-import '@polymer/marked-element/marked-element.js';
-import '@api-components/api-annotation-document/api-annotation-document.js';
-import '@api-components/api-headers-document/api-headers-document.js';
-import '@api-components/api-body-document/api-body-document.js';
-import {AmfHelperMixin} from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
-import '@polymer/paper-tabs/paper-tabs.js';
-import '@polymer/paper-tabs/paper-tab.js';
+import {PolymerElement} from '../../@polymer/polymer/polymer-element.js';
+import {AmfHelperMixin} from '../../@api-components/amf-helper-mixin/amf-helper-mixin.js';
+import '../../@polymer/polymer/lib/elements/dom-repeat.js';
+import '../../@polymer/polymer/lib/elements/dom-if.js';
+import '../../@api-components/raml-aware/raml-aware.js';
+import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
+import '../../@advanced-rest-client/markdown-styles/markdown-styles.js';
+import '../../@polymer/marked-element/marked-element.js';
+import '../../@api-components/api-annotation-document/api-annotation-document.js';
+import '../../@api-components/api-headers-document/api-headers-document.js';
+import '../../@api-components/api-body-document/api-body-document.js';
+import '../../@polymer/paper-tabs/paper-tabs.js';
+import '../../@polymer/paper-tabs/paper-tab.js';
 import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 /**
  * `api-responses-document`

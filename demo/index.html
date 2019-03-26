@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
     <title>api-request-editor demo</title>
 
-    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-    <script src="../node_modules/web-animations-js/web-animations-next.min.js"></script>
+    <script src="../../../@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../../../web-animations-js/web-animations-next.min.js"></script>
 
     <script type="module">
-      import '@polymer/polymer/lib/elements/dom-bind.js';
-      import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
-      import '@polymer/paper-styles/typography.js';
-      import '@api-components/raml-aware/raml-aware.js';
-      import '@api-components/api-navigation/api-navigation.js';
-      import '@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
-      import '@polymer/paper-item/paper-item.js';
-      import '@polymer/paper-listbox/paper-listbox.js';
+      import '../../../@polymer/polymer/lib/elements/dom-bind.js';
+      import '../../../@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
+      import '../../../@polymer/paper-styles/typography.js';
+      import '../../../@api-components/raml-aware/raml-aware.js';
+      import '../../../@api-components/api-navigation/api-navigation.js';
+      import '../../../@polymer/paper-dropdown-menu/paper-dropdown-menu.js';
+      import '../../../@polymer/paper-item/paper-item.js';
+      import '../../../@polymer/paper-listbox/paper-listbox.js';
+      import '../../../@api-components/api-console-default-theme/api-console-default-theme.js';
       import '../api-responses-document.js';
-      import '@api-components/api-console-default-theme/api-console-default-theme.js';
     </script>
 
     <custom-style>
@@ -93,8 +93,8 @@
       </template>
     </dom-bind>
     <script type="module">
-    import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-    import {AmfHelperMixin} from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
+    import {PolymerElement} from '../../../@polymer/polymer/polymer-element.js';
+    import {AmfHelperMixin} from '../../../@api-components/amf-helper-mixin/amf-helper-mixin.js';
     (function(app) {
       app.hasData = false;
       app._load = function() {
