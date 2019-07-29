@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/api-components/api-responses-document.svg?branch=stage)](https://travis-ci.org/api-components/api-responses-document)
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/api-components/api-responses-document)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/@api-components/api-responses-document)
 
-## &lt;api-responses-document&gt;
+## api-responses-document
 
-A documentation for method responses based on AMF model.
+A documentation for HTTP method responses based on AMF model.
 
 ```html
 <api-responses-document></api-responses-document>
@@ -34,8 +34,35 @@ npm install --save @api-components/api-responses-document
   </head>
   <body>
     <api-responses-document></api-responses-document>
+
+    <script>
+    const model = await getAmfModel();
+    const returns = await getMethodReturns(model);
+    const doc = document.querySelector('api-responses-document');
+    doc.amf = model;
+    doc.returns = returns;
+    // Select a 400 response from auto generated list of available status codes
+    const index = doc.codes.indexOf(400);
+    doc.selected = index;
+    </script>
   </body>
 </html>
+```
+
+### In a LitElement
+
+```js
+import { LitElement, html } from 'lit-element';
+import '@api-components/api-responses-document/api-responses-document.js';
+
+class SampleElement extends PolymerElement {
+  render() {
+    return html`
+    <api-responses-document .amf="${this.amf}" returns="..."></api-responses-document>
+    `;
+  }
+}
+customElements.define('sample-element', SampleElement);
 ```
 
 ### In a Polymer 3 element
@@ -54,23 +81,22 @@ class SampleElement extends PolymerElement {
 customElements.define('sample-element', SampleElement);
 ```
 
-### Installation
+### Development
 
 ```sh
 git clone https://github.com/api-components/api-responses-document
-cd api-url-editor
+cd api-responses-document
 npm install
-npm install -g polymer-cli
 ```
 
 ### Running the demo locally
 
 ```sh
-polymer serve --npm
-open http://127.0.0.1:<port>/demo/
+npm start
 ```
 
 ### Running the tests
+
 ```sh
-polymer test --npm
+npm test
 ```

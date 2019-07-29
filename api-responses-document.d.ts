@@ -12,11 +12,9 @@
 // tslint:disable:variable-name Describing an API that's defined elsewhere.
 // tslint:disable:no-any describes the API as best we are able today
 
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import {LitElement, html, css} from 'lit-element';
 
 import {AmfHelperMixin} from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 
 export {ApiResponsesDocument};
 
@@ -36,24 +34,11 @@ declare namespace ApiElements {
    *
    * In the documentation part it renders annotations (AMF custom proeprties)
    * added to the response, headers and body.
-   *
-   * ## Styling
-   *
-   * `<api-responses-document>` provides the following custom properties and mixins for styling:
-   *
-   * Custom property | Description | Default
-   * ----------------|-------------|----------
-   * `--api-responses-document` | Mixin applied to this elment | `{}`
-   * `--no-info-message` | Theme mixin, applied to empty info message | `{}`
    */
   class ApiResponsesDocument extends
     ApiElements.AmfHelperMixin(
     Object) {
-
-    /**
-     * `raml-aware` scope property to use.
-     */
-    aware: string|null|undefined;
+    amf: any;
 
     /**
      * The `returns` property of the method AMF model.
@@ -61,83 +46,66 @@ declare namespace ApiElements {
     returns: Array<object|null>|null;
 
     /**
-     * Computed value of status codes from `returns` property.
-     */
-    readonly codes: Array<String|null>|null;
-
-    /**
      * Selected index of a status code from the selector.
      */
     selected: number|null|undefined;
 
     /**
+     * Computed value of status codes from `returns` property.
+     */
+    _codes: Array<String|null>|null;
+
+    /**
      * Currently selected response object as AMF model os a type of
      * `http://raml.org/vocabularies/http#Response`
      */
-    readonly selectedResponse: object|null|undefined;
+    _selectedResponse: object|null|undefined;
+
+    /**
+     * `raml-aware` scope property to use.
+     */
+    aware: string|null|undefined;
 
     /**
      * Computed value of method description from `method` property.
      */
-    readonly description: string|null|undefined;
-
-    /**
-     * Computed value, true if `description` is set.
-     */
-    readonly hasDescription: boolean|null|undefined;
+    _description: string|null|undefined;
 
     /**
      * Computed value of AMF payload definition from `expects`
      * property.
      */
-    readonly payload: object|null|undefined;
-
-    /**
-     * Computed value, true if `payload` has values.
-     */
-    readonly hasPayload: boolean|null|undefined;
+    _payload: object|null|undefined;
 
     /**
      * Computed value of AMF payload definition from `expects`
      * property.
      */
-    readonly headers: object|null|undefined;
+    _headers: object|null|undefined;
 
     /**
-     * Computed value, true if `payload` has values.
-     */
-    readonly hasHeaders: boolean|null|undefined;
-
-    /**
-     * Computed value from current `selectedResponse`. True if the model
+     * Computed value from current `_selectedResponse`. True if the model
      * contains custom properties (annotations in RAML).
      */
-    readonly hasCustomProperties: boolean|null|undefined;
-
-    /**
-     * Computed value, true when a status is defined but does not
-     * contain any documentation.
-     */
-    readonly noDocs: boolean|null|undefined;
+    _hasCustomProperties: boolean|null|undefined;
 
     /**
      * Set to render a mobile friendly view.
      */
     narrow: boolean|null|undefined;
+    render(): any;
 
     /**
      * Computes list of status codes for the selector.
-     *
-     * @param returns Current value of `returns` property
      */
-    _computeCodes(returns: Array<object|null>|null): Array<String|null>|null;
+    _computeCodes(): Array<String|null>|null;
 
     /**
-     * Computes value for `selectedResponse` property.
+     * Computes value for `_selectedResponse` property.
      * Codes are sorted so it has to match status code with entry in returns
      * array
      */
-    _computeSelectedResponse(selected: Number|null, codes: Array<String|null>|null, returns: any[]|null): object|null;
+    _computeSelectedResponse(): object|null;
 
     /**
      * Checks if given `item` matches `statusCode`
@@ -154,6 +122,8 @@ declare namespace ApiElements {
      */
     _codesChanged(codes: any[]|null): void;
     _computeNoDocs(hasCustomProperties: any, hasHeaders: any, hasPayload: any, hasDescription: any): any;
+    _apiChangedHandler(e: any): void;
+    _tabsHandler(e: any): void;
   }
 }
 
