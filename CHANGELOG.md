@@ -151,3 +151,12 @@
 
 
 
+# 3.0.0 (2019-07-30)
+
+
+### Bug Fixes
+
+* addding missing depednency ([d498fd4](https://github.com/advanced-rest-client/api-responses-document/commit/d498fd4))
+
+
+
