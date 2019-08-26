@@ -127,20 +127,6 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     };
   }
 
-  get amf() {
-    return this._amf;
-  }
-
-  set amf(value) {
-    const old = this._amf;
-    if (old === value) {
-      return;
-    }
-    this._amf = value;
-    this.requestUpdate('amf', old);
-    this._codes = this._computeCodes();
-  }
-
   get returns() {
     return this._returns;
   }
@@ -212,7 +198,9 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this._headers = this._computeHeaders(value);
     this._hasCustomProperties = this._computeHasCustomProperties(value);
   }
-
+  __amfChanged() {
+    this._codes = this._computeCodes();
+  }
   /**
    * Computes list of status codes for the selector.
    *
