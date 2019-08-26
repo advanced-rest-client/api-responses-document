@@ -28,7 +28,7 @@
     "@advanced-rest-client/markdown-styles": "^3.1.0",
     "@api-components/amf-helper-mixin": "^3.1.4",
     "@api-components/api-annotation-document": "^3.0.1",
-    "@api-components/api-body-document": "^3.0.0",
+    "@api-components/api-body-document": "^3.0.1",
     "@api-components/api-headers-document": "^3.0.0",
     "@api-components/raml-aware": "^3.0.0",
     "@polymer/paper-tabs": "^3.1.0",

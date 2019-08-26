@@ -1,4 +1,4 @@
-import { fixture, assert, nextFrame } from '@open-wc/testing';
+import { fixture, assert, nextFrame, aTimeout } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
 import '../api-responses-document.js';
 
@@ -91,6 +91,7 @@ describe('<api-responses-document>', function() {
           element = await basicFixture();
           element.amf = amf;
           element.returns = getResponseModel(element, '/people', 2);
+          await aTimeout();
         });
 
         it('is accessible', async () => {
@@ -157,10 +158,11 @@ describe('<api-responses-document>', function() {
           element = await basicFixture();
           element.amf = amf;
           element.returns = getResponseModel(element, '/people', 2);
-          element.selected = 2;
+          await aTimeout();
         });
 
         it('selectedResponse is computed', () => {
+          element.selected = 2;
           const response = element._selectedResponse;
           assert.typeOf(response, 'object', 'selectedResponse is an object');
           const status = element._getValue(response, element.ns.schema.schemaName);
@@ -168,6 +170,7 @@ describe('<api-responses-document>', function() {
         });
 
         it('Description is rendered', async () => {
+          element.selected = 2;
           assert.typeOf(element._description, 'string', '_description is computed');
           await nextFrame();
           const node = element.shadowRoot.querySelector('arc-marked');
@@ -175,6 +178,7 @@ describe('<api-responses-document>', function() {
         });
 
         it('Annotations are not rendered', async () => {
+          element.selected = 2;
           assert.isFalse(element._hasCustomProperties, '_hasCustomProperties is computed');
           await nextFrame();
           const node = element.shadowRoot.querySelector('api-annotation-document');
@@ -182,6 +186,7 @@ describe('<api-responses-document>', function() {
         });
 
         it('Headers are not rendered', async () => {
+          element.selected = 2;
           assert.isUndefined(element._headers, '_headers is computed');
           await nextFrame();
           const node = element.shadowRoot.querySelector('api-headers-document');
@@ -189,6 +194,7 @@ describe('<api-responses-document>', function() {
         });
 
         it('Payload is rendered', async () => {
+          element.selected = 2;
           assert.typeOf(element._payload, 'array', '_payload is computed');
           await nextFrame();
           const node = element.shadowRoot.querySelector('api-body-document');
@@ -203,7 +209,7 @@ describe('<api-responses-document>', function() {
           element = await basicFixture();
           element.amf = amf;
           element.returns = getResponseModel(element, '/no-desc', 0);
-          await nextFrame();
+          await aTimeout();
         });
 
         it('_description is not computed', () => {

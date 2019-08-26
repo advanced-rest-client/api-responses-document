@@ -151,8 +151,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     }
     this._returns = value;
     this.requestUpdate('returns', old);
-    this._codes = this._computeCodes();
-    this._selectedResponse = this._computeSelectedResponse();
+    this.__amfChanged();
   }
 
   get selected() {
@@ -187,7 +186,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     }
     this.__codes = value;
     this._codesChanged(value);
-    this._selectedResponse = this._computeSelectedResponse();
+    this.requestUpdate('_codes', old);
     this.dispatchEvent(new CustomEvent('codes-changed'), {
       detail: {
         value
@@ -211,8 +210,11 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this._headers = this._computeHeaders(value);
     this._hasCustomProperties = this._computeHasCustomProperties(value);
   }
-  __amfChanged() {
+
+  async __amfChanged() {
+    await this.updateComplete;
     this._codes = this._computeCodes();
+    this._selectedResponse = this._computeSelectedResponse();
   }
   /**
    * Computes list of status codes for the selector.
