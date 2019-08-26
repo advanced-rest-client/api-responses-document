@@ -53,7 +53,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   }
 
   render() {
-    const { _description, _payload, _headers, _hasCustomProperties, aware, selected, codes, _selectedResponse, amf, narrow } = this;
+    const { _description, _payload, _headers, _hasCustomProperties, aware, selected, codes, _selectedResponse, amf, narrow, legacy } = this;
     const hasDescription = !!_description;
     const hasPayload = !!(_payload && _payload.length);
     const hasHeaders = !!(_headers && _headers.length);
@@ -64,13 +64,22 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     ${codes && codes.length ? html`<paper-tabs .selected="${selected}" @selected-changed="${this._tabsHandler}">
       ${codes.map((item) => html`<paper-tab>${item}</paper-tab>`)}
       </paper-tabs>` : undefined}
-    ${_hasCustomProperties ? html`<api-annotation-document .shape="${_selectedResponse}"></api-annotation-document>`:undefined}
+    ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${legacy}" .shape="${_selectedResponse}"></api-annotation-document>`:undefined}
     ${_description ? html`<arc-marked .markdown="${_description}">
       <div slot="markdown-html" class="markdown-body"></div>
     </arc-marked>` : undefined}
-    ${hasHeaders ? html`<api-headers-document opened .amf="${amf}" .headers="${_headers}"
+    ${hasHeaders ? html`<api-headers-document
+      opened
+      .amf="${amf}"
+      .headers="${_headers}"
+      ?legacy="${legacy}"
       ?narrow="${narrow}"></api-headers-document>` : undefined}
-    ${hasPayload ? html`<api-body-document .amf="${amf}" .body="${_payload}" ?narrow="${narrow}" opened></api-body-document>` : undefined}
+    ${hasPayload ? html`<api-body-document
+      .amf="${amf}"
+      .body="${_payload}"
+      ?narrow="${narrow}"
+      ?legacy="${legacy}"
+      opened></api-body-document>` : undefined}
     ${noDocs ? html`<p class="no-info">No description provided</p>` : undefined}`;
   }
 
@@ -123,7 +132,11 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       /**
        * Set to render a mobile friendly view.
        */
-       narrow: { type: Boolean }
+       narrow: { type: Boolean },
+       /**
+       * Enables Anypoint legacy styling
+       */
+      legacy: { type: Boolean }
     };
   }
 
