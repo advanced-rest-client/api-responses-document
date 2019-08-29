@@ -104,7 +104,7 @@ describe('<api-responses-document>', function() {
 
         it('Codes are rendered', async () => {
           await nextFrame();
-          const nodes = element.shadowRoot.querySelectorAll('paper-tabs paper-tab');
+          const nodes = element.shadowRoot.querySelectorAll('anypoint-tabs anypoint-tab');
           assert.lengthOf(nodes, 3,  'has 3 tabs');
           assert.equal(nodes[0].innerText.trim(), '200',  '200 status is rendered');
           assert.equal(nodes[1].innerText.trim(), '204',  '204 status is rendered');

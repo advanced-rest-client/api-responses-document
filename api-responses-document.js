@@ -6,8 +6,8 @@ import '@advanced-rest-client/arc-marked/arc-marked.js';
 import '@api-components/api-annotation-document/api-annotation-document.js';
 import '@api-components/api-headers-document/api-headers-document.js';
 import '@api-components/api-body-document/api-body-document.js';
-import '@polymer/paper-tabs/paper-tabs.js';
-import '@polymer/paper-tabs/paper-tab.js';
+import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
+import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
 /**
  * `api-responses-document`
  *
@@ -48,12 +48,32 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
 
       .no-info {
         font-style: italic;
+      }
+
+      .codes-selector {
+        border-bottom: 1px #e5e5e5 solid;
       }`
     ];
   }
 
+  _codesSelectorTemplate() {
+    const { codes, selected } = this;
+    if (!codes || !codes.length) {
+      return '';
+    }
+    return html`
+    <div class="codes-selector">
+      <anypoint-tabs
+        .selected="${selected}"
+        ?compatibility="${this.legacy}"
+        @selected-changed="${this._tabsHandler}">
+        ${codes.map((item) => html`<anypoint-tab>${item}</anypoint-tab>`)}
+      </anypoint-tabs>
+    </div>`;
+  }
+
   render() {
-    const { _description, _payload, _headers, _hasCustomProperties, aware, selected, codes, _selectedResponse, amf, narrow, legacy } = this;
+    const { _description, _payload, _headers, _hasCustomProperties, aware, _selectedResponse, amf, narrow, legacy } = this;
     const hasDescription = !!_description;
     const hasPayload = !!(_payload && _payload.length);
     const hasHeaders = !!(_headers && _headers.length);
@@ -61,9 +81,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     return html`
     ${aware ?
       html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
-    ${codes && codes.length ? html`<paper-tabs .selected="${selected}" @selected-changed="${this._tabsHandler}">
-      ${codes.map((item) => html`<paper-tab>${item}</paper-tab>`)}
-      </paper-tabs>` : undefined}
+    ${this._codesSelectorTemplate()}
     ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${legacy}" .shape="${_selectedResponse}"></api-annotation-document>`:undefined}
     ${_description ? html`<arc-marked .markdown="${_description}">
       <div slot="markdown-html" class="markdown-body"></div>
