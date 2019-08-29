@@ -65,7 +65,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     <div class="codes-selector">
       <anypoint-tabs
         .selected="${selected}"
-        ?compatibility="${this.legacy}"
+        ?compatibility="${this.compatibility}"
         @selected-changed="${this._tabsHandler}">
         ${codes.map((item) => html`<anypoint-tab>${item}</anypoint-tab>`)}
       </anypoint-tabs>
@@ -73,7 +73,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   }
 
   render() {
-    const { _description, _payload, _headers, _hasCustomProperties, aware, _selectedResponse, amf, narrow, legacy } = this;
+    const { _description, _payload, _headers, _hasCustomProperties, aware, _selectedResponse, amf, narrow, compatibility } = this;
     const hasDescription = !!_description;
     const hasPayload = !!(_payload && _payload.length);
     const hasHeaders = !!(_headers && _headers.length);
@@ -82,7 +82,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     ${aware ?
       html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
     ${this._codesSelectorTemplate()}
-    ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${legacy}" .shape="${_selectedResponse}"></api-annotation-document>`:undefined}
+    ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${compatibility}" .shape="${_selectedResponse}"></api-annotation-document>`:undefined}
     ${_description ? html`<arc-marked .markdown="${_description}">
       <div slot="markdown-html" class="markdown-body"></div>
     </arc-marked>` : undefined}
@@ -90,13 +90,13 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       opened
       .amf="${amf}"
       .headers="${_headers}"
-      ?legacy="${legacy}"
+      ?legacy="${compatibility}"
       ?narrow="${narrow}"></api-headers-document>` : undefined}
     ${hasPayload ? html`<api-body-document
       .amf="${amf}"
       .body="${_payload}"
       ?narrow="${narrow}"
-      ?legacy="${legacy}"
+      ?legacy="${compatibility}"
       opened></api-body-document>` : undefined}
     ${noDocs ? html`<p class="no-info">No description provided</p>` : undefined}`;
   }
@@ -152,10 +152,22 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
        */
        narrow: { type: Boolean },
        /**
-       * Enables Anypoint legacy styling
+       * @deprecated Use `compatibility` instead
        */
-      legacy: { type: Boolean }
+      legacy: { type: Boolean },
+      /**
+       * Enables compatibility with Anypoint components.
+       */
+      compatibility: { type: Boolean }
     };
+  }
+
+  get legacy() {
+    return this._compatibility;
+  }
+
+  set legacy(value) {
+    this.compatibility = value;
   }
 
   get returns() {
