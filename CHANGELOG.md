@@ -160,3 +160,17 @@
 
 
 
+## 3.0.2 (2019-08-29)
+
+
+### Bug Fixes
+
+* addding missing depednency ([d498fd4](https://github.com/advanced-rest-client/api-responses-document/commit/d498fd4))
+
+
+### Features
+
+* adding support for `legacy` attribute ([87969ed](https://github.com/advanced-rest-client/api-responses-document/commit/87969ed))
+
+
+
