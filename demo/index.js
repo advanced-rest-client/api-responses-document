@@ -3,6 +3,7 @@ import { LitElement } from 'lit-element';
 import { ApiDemoPageBase } from '@advanced-rest-client/arc-demo-helper/ApiDemoPage.js';
 import '@api-components/raml-aware/raml-aware.js';
 import '@api-components/api-navigation/api-navigation.js';
+import '@anypoint-web-components/anypoint-styles/colors.js';
 import '../api-responses-document.js';
 
 import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';

@@ -20,7 +20,11 @@ module.exports = (config) => {
         },
         {
           pattern: require.resolve('axe-core/axe.min.js')
-        }
+        },
+        {
+          pattern: require.resolve('@anypoint-web-components/anypoint-styles/colors.js'),
+          type: 'module'
+        },
       ],
 
       // see the karma-esm docs for all options
