@@ -73,7 +73,18 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   }
 
   render() {
-    const { _description, _payload, _headers, _hasCustomProperties, aware, _selectedResponse, amf, narrow, compatibility } = this;
+    const {
+      _description,
+      _payload,
+      _headers,
+      _hasCustomProperties,
+      aware,
+      _selectedResponse,
+      amf,
+      narrow,
+      compatibility,
+      graph
+    } = this;
     const hasDescription = !!_description;
     const hasPayload = !!(_payload && _payload.length);
     const hasHeaders = !!(_headers && _headers.length);
@@ -90,13 +101,15 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       opened
       .amf="${amf}"
       .headers="${_headers}"
-      ?legacy="${compatibility}"
-      ?narrow="${narrow}"></api-headers-document>` : undefined}
+      ?compatibility="${compatibility}"
+      ?narrow="${narrow}"
+      ?graph="${graph}"></api-headers-document>` : undefined}
     ${hasPayload ? html`<api-body-document
       .amf="${amf}"
       .body="${_payload}"
       ?narrow="${narrow}"
-      ?legacy="${compatibility}"
+      ?compatibility="${compatibility}"
+      ?graph="${graph}"
       opened></api-body-document>` : undefined}
     ${noDocs ? html`<p class="no-info">No description provided</p>` : undefined}`;
   }
@@ -158,7 +171,12 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       /**
        * Enables compatibility with Anypoint components.
        */
-      compatibility: { type: Boolean }
+      compatibility: { type: Boolean },
+      /**
+       * When enabled it renders external types as links and dispatches
+       * `api-navigation-selection-changed` when clicked.
+       */
+      graph: { type: Boolean }
     };
   }
 
