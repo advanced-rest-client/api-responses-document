@@ -14,7 +14,7 @@ describe('<api-responses-document>', function() {
   function getResponseModel(element, endpointPath, methodIndex) {
     const webapi = element._computeWebApi(element.amf);
     const endpoint = element._computeEndpointByPath(webapi, endpointPath);
-    const opKey = element._getAmfKey(element.ns.w3.hydra.supportedOperation);
+    const opKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.supportedOperation);
     const method = element._ensureArray(endpoint[opKey])[methodIndex];
     return element._computeReturns(method);
   }
@@ -123,7 +123,7 @@ describe('<api-responses-document>', function() {
         it('selectedResponse is computed', () => {
           const response = element._selectedResponse;
           assert.typeOf(response, 'object', 'selectedResponse is an object');
-          const status = element._getValue(response, element.ns.schema.schemaName);
+          const status = element._getValue(response, element.ns.aml.vocabularies.core.name);
           assert.equal(status, '200', 'Computed correct response');
         });
 
@@ -170,7 +170,7 @@ describe('<api-responses-document>', function() {
           element.selected = 2;
           const response = element._selectedResponse;
           assert.typeOf(response, 'object', 'selectedResponse is an object');
-          const status = element._getValue(response, element.ns.schema.schemaName);
+          const status = element._getValue(response, element.ns.aml.vocabularies.core.name);
           assert.equal(status, 400);
         });
 

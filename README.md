@@ -8,13 +8,10 @@
 
 A documentation for HTTP method responses based on AMF model.
 
-```html
-<api-responses-document></api-responses-document>
-```
+## Version compatibility
 
-### API components
-
-This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
+This version only works with AMF model version 2 (AMF parser >= 4.0.0).
+For compatibility with previous model version use `3.x.x` version of the component.
 
 ## Usage
 
@@ -81,7 +78,7 @@ class SampleElement extends PolymerElement {
 customElements.define('sample-element', SampleElement);
 ```
 
-### Development
+## Development
 
 ```sh
 git clone https://github.com/api-components/api-responses-document
@@ -100,3 +97,7 @@ npm start
 ```sh
 npm test
 ```
+
+## API components
+
+This components is a part of [API components ecosystem](https://elements.advancedrestclient.com/)
