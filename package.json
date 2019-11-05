@@ -28,7 +28,7 @@
     "@advanced-rest-client/markdown-styles": "^3.1.0",
     "@anypoint-web-components/anypoint-tabs": "^0.1.7",
     "@api-components/amf-helper-mixin": "^4.0.11",
-    "@api-components/api-annotation-document": "^4.0.0",
+    "@api-components/api-annotation-document": "git://github.com/advanced-rest-client/api-annotation-document#embed-css-style",
     "@api-components/api-body-document": "^4.0.0",
     "@api-components/api-headers-document": "^4.0.0",
     "@api-components/raml-aware": "^3.0.0",
