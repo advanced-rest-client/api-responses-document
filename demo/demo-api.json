@@ -5634,7 +5634,7 @@
 }
 ],
 "amf://id#218": {
-"http://a.ml/vocabularies/core#name": [
+"http://a.ml/vocabularies/core#extensionName": [
 {
 "@value": "deprecated"
 }

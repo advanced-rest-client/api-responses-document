@@ -5634,7 +5634,7 @@
 }
 ],
 "amf://id#218": {
-"core:name": [
+"core:extensionName": [
 {
 "@value": "deprecated"
 }
