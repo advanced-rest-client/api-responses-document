@@ -174,3 +174,24 @@
 
 
 
+## 4.0.1 (2019-11-10)
+
+
+### Bug Fixes
+
+* addding missing depednency ([d498fd4](https://github.com/advanced-rest-client/api-responses-document/commit/d498fd4e01bcf42aaa348602ef19eb2c2d52ffc6))
+* update api-annotation-document version ([5bdcbf1](https://github.com/advanced-rest-client/api-responses-document/commit/5bdcbf1f3f83a687e9a812188b3364077780b785))
+
+
+### Features
+
+* adding support for `graph` property ([4063c50](https://github.com/advanced-rest-client/api-responses-document/commit/4063c50584001ca7922a2edaf3031bfd71846d03))
+* adding support for `legacy` attribute ([87969ed](https://github.com/advanced-rest-client/api-responses-document/commit/87969edecd5f3a926a743c78ced0efbafdb98d6a))
+
+
+### Reverts
+
+* undo dependency updates ([8a8f68a](https://github.com/advanced-rest-client/api-responses-document/commit/8a8f68a4d49cdb3c308f753ea207e2fc22c914e3))
+
+
+
