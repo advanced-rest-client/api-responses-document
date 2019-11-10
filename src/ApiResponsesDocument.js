@@ -30,7 +30,7 @@ import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
  * @appliesMixin ApiElements.AmfHelperMixin
  */
 export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
-  static get styles() {
+  get styles() {
     return [
       markdownStyles,
       css`:host {
@@ -88,7 +88,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     const hasPayload = !!(_payload && _payload.length);
     const hasHeaders = !!(_headers && _headers.length);
     const noDocs = this._computeNoDocs(_hasCustomProperties, hasHeaders, hasPayload, hasDescription);
-    return html`
+    return html`<style>${this.styles}</style>
     ${aware ?
       html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
     ${this._codesSelectorTemplate()}
