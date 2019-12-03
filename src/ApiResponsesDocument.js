@@ -90,27 +90,27 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     const noDocs = this._computeNoDocs(_hasCustomProperties, hasHeaders, hasPayload, hasDescription);
     return html`<style>${this.styles}</style>
     ${aware ?
-      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : undefined}
+      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : ''}
     ${this._codesSelectorTemplate()}
-    ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${compatibility}" .shape="${_selectedResponse}"></api-annotation-document>`:undefined}
+    ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${compatibility}" .shape="${_selectedResponse}"></api-annotation-document>`:''}
     ${_description ? html`<arc-marked .markdown="${_description}" sanitize>
       <div slot="markdown-html" class="markdown-body"></div>
-    </arc-marked>` : undefined}
+    </arc-marked>` : ''}
     ${hasHeaders ? html`<api-headers-document
       opened
       .amf="${amf}"
       .headers="${_headers}"
       ?compatibility="${compatibility}"
       ?narrow="${narrow}"
-      ?graph="${graph}"></api-headers-document>` : undefined}
+      ?graph="${graph}"></api-headers-document>` : ''}
     ${hasPayload ? html`<api-body-document
       .amf="${amf}"
       .body="${_payload}"
       ?narrow="${narrow}"
       ?compatibility="${compatibility}"
       ?graph="${graph}"
-      opened></api-body-document>` : undefined}
-    ${noDocs ? html`<p class="no-info">No description provided</p>` : undefined}`;
+      opened></api-body-document>` : ''}
+    ${noDocs ? html`<p class="no-info">No description provided</p>` : ''}`;
   }
 
   static get properties() {
