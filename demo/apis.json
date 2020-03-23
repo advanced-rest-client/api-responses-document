@@ -1,3 +1,4 @@
 {
-  "demo-api/demo-api.raml": "RAML 1.0"
+  "demo-api/demo-api.raml": "RAML 1.0",
+  "oas-callbacks/oas-callbacks.yaml": { "type": "OAS 3.0", "mime": "application/yaml" }
 }

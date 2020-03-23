@@ -180,6 +180,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this._payload = this._computePayload(value);
     this._headers = this._computeHeaders(value);
     this._hasCustomProperties = this._computeHasCustomProperties(value);
+    this.links = this._computeLinks(value);
   }
 
   get hasPayload() {
@@ -286,6 +287,14 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
 
   _tabsHandler(e) {
     this.selected = e.detail.value;
+  }
+
+  _computeLinks(response) {
+    if (!response) {
+      return null;
+    }
+    const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.link);
+    return this._ensureArray(response[key]);
   }
 
   render() {
