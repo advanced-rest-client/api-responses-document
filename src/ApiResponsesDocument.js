@@ -38,64 +38,6 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     ];
   }
 
-  _codesSelectorTemplate() {
-    const { codes, selected } = this;
-    if (!codes || !codes.length) {
-      return '';
-    }
-    return html`
-    <div class="codes-selector">
-      <anypoint-tabs
-        .selected="${selected}"
-        ?compatibility="${this.compatibility}"
-        @selected-changed="${this._tabsHandler}">
-        ${codes.map((item) => html`<anypoint-tab>${item}</anypoint-tab>`)}
-      </anypoint-tabs>
-    </div>`;
-  }
-
-  render() {
-    const {
-      _description,
-      _payload,
-      _headers,
-      _hasCustomProperties,
-      aware,
-      _selectedResponse,
-      amf,
-      narrow,
-      compatibility,
-      graph
-    } = this;
-    const hasDescription = !!_description;
-    const hasPayload = !!(_payload && _payload.length);
-    const hasHeaders = !!(_headers && _headers.length);
-    const noDocs = this._computeNoDocs(_hasCustomProperties, hasHeaders, hasPayload, hasDescription);
-    return html`<style>${this.styles}</style>
-    ${aware ?
-      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : ''}
-    ${this._codesSelectorTemplate()}
-    ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${compatibility}" .shape="${_selectedResponse}"></api-annotation-document>`:''}
-    ${_description ? html`<arc-marked .markdown="${_description}" sanitize>
-      <div slot="markdown-html" class="markdown-body"></div>
-    </arc-marked>` : ''}
-    ${hasHeaders ? html`<api-headers-document
-      opened
-      .amf="${amf}"
-      .headers="${_headers}"
-      ?compatibility="${compatibility}"
-      ?narrow="${narrow}"
-      ?graph="${graph}"></api-headers-document>` : ''}
-    ${hasPayload ? html`<api-body-document
-      .amf="${amf}"
-      .body="${_payload}"
-      ?narrow="${narrow}"
-      ?compatibility="${compatibility}"
-      ?graph="${graph}"
-      opened></api-body-document>` : ''}
-    ${noDocs ? html`<p class="no-info">No description provided</p>` : ''}`;
-  }
-
   static get properties() {
     return {
       /**
@@ -241,6 +183,37 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this._hasCustomProperties = this._computeHasCustomProperties(value);
   }
 
+  get hasPayload() {
+    const {
+      _payload,
+    } = this;
+    return !!(_payload && _payload.length);
+  }
+
+  get hasHeaders() {
+    const {
+      _headers,
+    } = this;
+    return !!(_headers && _headers.length);
+  }
+
+  get hasDescription() {
+    const {
+      _description,
+    } = this;
+    return !!_description;
+  }
+
+  get noDocumentation() {
+    const {
+      hasDescription,
+      hasPayload,
+      hasHeaders,
+      _hasCustomProperties,
+    } = this;
+    return !(_hasCustomProperties || hasHeaders || hasPayload || hasDescription);
+  }
+
   async __amfChanged() {
     await this.updateComplete;
     this._codes = this._computeCodes();
@@ -307,10 +280,6 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     }
   }
 
-  _computeNoDocs(hasCustomProperties, hasHeaders, hasPayload, hasDescription) {
-    return !(hasCustomProperties || hasHeaders || hasPayload || hasDescription);
-  }
-
   _apiChangedHandler(e) {
     const { value } = e.detail;
     this.amf = value;
@@ -318,5 +287,112 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
 
   _tabsHandler(e) {
     this.selected = e.detail.value;
+  }
+
+  render() {
+    return html`<style>${this.styles}</style>
+    ${this._awareTemplate()}
+    ${this._codesSelectorTemplate()}
+    ${this._annotationsTemplate()}
+    ${this._descriptionTemplate()}
+    ${this._headersTemplate()}
+    ${this._payloadTemplate()}
+    ${this.noDocumentation ? html`<p class="no-info">No description provided</p>` : ''}`;
+  }
+
+  _codesSelectorTemplate() {
+    const { codes, selected } = this;
+    if (!codes || !codes.length) {
+      return '';
+    }
+    return html`
+    <div class="codes-selector">
+      <anypoint-tabs
+        .selected="${selected}"
+        ?compatibility="${this.compatibility}"
+        @selected-changed="${this._tabsHandler}">
+        ${codes.map((item) => html`<anypoint-tab>${item}</anypoint-tab>`)}
+      </anypoint-tabs>
+    </div>`;
+  }
+
+  _awareTemplate() {
+    const {
+      aware,
+    } = this;
+    if (!aware) {
+      return '';
+    }
+    return html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>`;
+  }
+
+  _annotationsTemplate() {
+    const {
+      _hasCustomProperties,
+      compatibility,
+      _selectedResponse,
+    } = this;
+    if (!_hasCustomProperties) {
+      return '';
+    }
+    return html`<api-annotation-document
+      ?compatibility="${compatibility}"
+      .shape="${_selectedResponse}"
+    ></api-annotation-document>`;
+  }
+
+  _descriptionTemplate() {
+    const {
+      _description,
+    } = this;
+    if (!_description) {
+      return '';
+    }
+    return html`<arc-marked .markdown="${_description}" sanitize>
+      <div slot="markdown-html" class="markdown-body"></div>
+    </arc-marked>`;
+  }
+
+  _headersTemplate() {
+    const {
+      _headers,
+      amf,
+      narrow,
+      compatibility,
+      graph
+    } = this;
+    const hasHeaders = !!(_headers && _headers.length);
+    if (!hasHeaders) {
+      return '';
+    }
+    return html`<api-headers-document
+      opened
+      .amf="${amf}"
+      .headers="${_headers}"
+      ?compatibility="${compatibility}"
+      ?narrow="${narrow}"
+      ?graph="${graph}"
+    ></api-headers-document>`;
+  }
+
+  _payloadTemplate() {
+    const {
+      _payload,
+      amf,
+      narrow,
+      compatibility,
+      graph
+    } = this;
+    const hasPayload = !!(_payload && _payload.length);
+    if (!hasPayload) {
+      return '';
+    }
+    return html`<api-body-document
+      .amf="${amf}"
+      .body="${_payload}"
+      ?narrow="${narrow}"
+      ?compatibility="${compatibility}"
+      ?graph="${graph}"
+      opened></api-body-document>`
   }
 }
