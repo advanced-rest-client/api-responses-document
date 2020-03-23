@@ -27,7 +27,6 @@ import styles from './Styles.js';
  *
  * @customElement
  * @demo demo/index.html
- * @memberof ApiElements
  * @appliesMixin ApiElements.AmfHelperMixin
  */
 export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
