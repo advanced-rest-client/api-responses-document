@@ -1,23 +1,64 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-    <title>api-request-editor demo</title>
 
-    <script src="../node_modules/web-animations-js/web-animations-next.min.js"></script>
-
-    <style>
-
-    api-responses-document {
-      margin-left: 40px;
-      flex: 1
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>api-responses-document demo</title>
+  <style>
+    .main.centered {
+      max-width: 1440px !important;
     }
-    </style>
-  </head>
-  <body>
-    <div id="demo"></div>
 
-    <script type="module" src="index.js"></script>
-  </body>
+    body.styled {
+    --anypoiont-dropdown-shaddow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --anypoiont-autocomplete-dropdown-shaddow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+    --arc-font-subhead-font-size: 16px;
+    --arc-font-subhead-font-weight: 400;
+    --arc-font-subhead-line-height: 24px;
+    --code-mirror-height: auto;
+
+    --arc-font-headline-font-size: 24px;
+    --arc-font-headline-font-weight: 400;
+    --arc-font-headline-letter-spacing: -.012em;
+    --arc-font-headline-line-height: 32px;
+    --arc-font-title-font-size: 20px;
+    --arc-font-title-font-weight: 500;
+    --arc-font-title-line-height: 28px;
+  }
+
+  body.styled.dark {
+    --secondary-text-color: #616161;
+    --primary-background-color: #424242;
+    --code-background-color: #263238;
+    --code-color: #fff;
+
+    --anypoint-input-legacy-label-color: #F5F5F5;
+    --arc-interactive-demo-options-color: #F5F5F5;
+    
+    --anypoint-dropdown-menu-background-color: #494949;
+    --anypoint-dropdown-menu-label-background-color: var(--primary-background-color);
+    --anypoint-listbox-background-color: #494949;
+    --anypoint-dropdown-menu-focus-background-color: #9E9E9E;
+    --anypoint-dropdown-menu-label-color: #fff;
+    --anypoint-dropdown-menu-info-message-color: #fff;
+    --anypoint-item-hover-background-color: #9E9E9E;
+    --anypoiont-autocomplete-background-color: #494949;
+    --anypoint-icon-button-emphasis-low-color: #fff;
+
+    --api-type-document-type-attribute-color: #fff;
+    --api-annotation-document-color: #fff;
+
+    --markdown-styles-code-text-shadow: none;
+
+    --api-type-document-property-parent-color: #fff;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="demo"></div>
+  <script type="module" src="index.js"></script>
+</body>
+
 </html>
