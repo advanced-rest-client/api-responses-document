@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
 import '@api-components/raml-aware/raml-aware.js';
 import markdownStyles from '@advanced-rest-client/markdown-styles/markdown-styles.js';
@@ -8,6 +8,7 @@ import '@api-components/api-headers-document/api-headers-document.js';
 import '@api-components/api-body-document/api-body-document.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
+import styles from './Styles.js';
 /**
  * `api-responses-document`
  *
@@ -33,25 +34,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   get styles() {
     return [
       markdownStyles,
-      css`:host {
-        display: block;
-        font-size: var(--arc-font-body1-font-size);
-        font-weight: var(--arc-font-body1-font-weight);
-        line-height: var(--arc-font-body1-line-height);
-      }
-
-      arc-marked {
-        margin-top: 8px;
-        padding: 0;
-      }
-
-      .no-info {
-        font-style: italic;
-      }
-
-      .codes-selector {
-        border-bottom: 1px #e5e5e5 solid;
-      }`
+      styles,
     ];
   }
 
