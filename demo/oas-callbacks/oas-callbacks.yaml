@@ -87,6 +87,10 @@ paths:
               operationId: unsubscribeOperation
               parameters:
                 Id: $response.body#/subscriberId
+            otherOp:
+              parameters:
+                one: $response.body#/one
+                two: $response.body#/two
       callbacks:
         inProgress:
           '{$request.body#/inProgressUrl}':

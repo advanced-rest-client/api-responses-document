@@ -9,6 +9,7 @@ import '@api-components/api-body-document/api-body-document.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
 import styles from './Styles.js';
+import '../api-links-document.js';
 /**
  * `api-responses-document`
  *
@@ -305,6 +306,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     ${this._descriptionTemplate()}
     ${this._headersTemplate()}
     ${this._payloadTemplate()}
+    ${this._linksTemplate()}
     ${this.noDocumentation ? html`<p class="no-info">No description provided</p>` : ''}`;
   }
 
@@ -402,5 +404,18 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       ?compatibility="${compatibility}"
       ?graph="${graph}"
       opened></api-body-document>`
+  }
+
+  _linksTemplate() {
+    const { links, amf } = this;
+    if (!links || !links.length) {
+      return '';
+    }
+    return html`
+    <api-links-document
+      .amf="${amf}"
+      .links="${links}"
+    ></api-links-document>
+    `;
   }
 }

@@ -3,9 +3,6 @@ import { css } from 'lit-element';
 export default css`
 :host {
   display: block;
-  font-size: var(--arc-font-body1-font-size);
-  font-weight: var(--arc-font-body1-font-weight);
-  line-height: var(--arc-font-body1-line-height);
 }
 
 arc-marked {
@@ -19,5 +16,9 @@ arc-marked {
 
 .codes-selector {
   border-bottom: 1px #e5e5e5 solid;
+}
+
+api-links-document {
+  margin-top: 20px;
 }
 `;
