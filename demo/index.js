@@ -48,7 +48,7 @@ class ApiDemo extends ApiDemoPage {
   _apiListTemplate() {
     return [
       ['demo-api', 'Demo API'],
-      ['oas-callbacks', 'OAS 3 callbacks']
+      ['oas-callbacks', 'OAS 3 callbacks'],
     ].map(([file, label]) => html`
       <anypoint-item data-src="${file}-compact.json">${label} - compact model</anypoint-item>
       <anypoint-item data-src="${file}.json">${label}</anypoint-item>

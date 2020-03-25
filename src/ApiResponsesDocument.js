@@ -9,6 +9,7 @@ import '@api-components/api-body-document/api-body-document.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
 import styles from './Styles.js';
+import '../api-links-document.js';
 /**
  * `api-responses-document`
  *
@@ -27,7 +28,6 @@ import styles from './Styles.js';
  *
  * @customElement
  * @demo demo/index.html
- * @memberof ApiElements
  * @appliesMixin ApiElements.AmfHelperMixin
  */
 export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
@@ -100,7 +100,12 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
        * When enabled it renders external types as links and dispatches
        * `api-navigation-selection-changed` when clicked.
        */
-      graph: { type: Boolean }
+      graph: { type: Boolean },
+      /**
+       * A computed list of OAS' Links in currently selected response.
+       * @type {Array<Object>|undefined}
+       */
+      links: { type: Array },
     };
   }
 
@@ -181,6 +186,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this._payload = this._computePayload(value);
     this._headers = this._computeHeaders(value);
     this._hasCustomProperties = this._computeHasCustomProperties(value);
+    this.links = this._computeLinks(value);
   }
 
   get hasPayload() {
@@ -289,6 +295,14 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this.selected = e.detail.value;
   }
 
+  _computeLinks(response) {
+    if (!response) {
+      return null;
+    }
+    const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.link);
+    return this._ensureArray(response[key]);
+  }
+
   render() {
     return html`<style>${this.styles}</style>
     ${this._awareTemplate()}
@@ -297,6 +311,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     ${this._descriptionTemplate()}
     ${this._headersTemplate()}
     ${this._payloadTemplate()}
+    ${this._linksTemplate()}
     ${this.noDocumentation ? html`<p class="no-info">No description provided</p>` : ''}`;
   }
 
@@ -394,5 +409,18 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       ?compatibility="${compatibility}"
       ?graph="${graph}"
       opened></api-body-document>`
+  }
+
+  _linksTemplate() {
+    const { links, amf } = this;
+    if (!links || !links.length) {
+      return '';
+    }
+    return html`
+    <api-links-document
+      .amf="${amf}"
+      .links="${links}"
+    ></api-links-document>
+    `;
   }
 }

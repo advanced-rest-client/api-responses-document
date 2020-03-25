@@ -1,3 +1,23 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## 4.1.0 (2020-03-25)
+
+
+### Features
+
+* adding support for `graph` property ([4063c50](https://github.com/advanced-rest-client/api-responses-document/commit/4063c50584001ca7922a2edaf3031bfd71846d03))
+* adding support for `legacy` attribute ([87969ed](https://github.com/advanced-rest-client/api-responses-document/commit/87969edecd5f3a926a743c78ced0efbafdb98d6a))
+
+
+### Bug Fixes
+
+* addding missing depednency ([d498fd4](https://github.com/advanced-rest-client/api-responses-document/commit/d498fd4e01bcf42aaa348602ef19eb2c2d52ffc6))
+* fixing IE11 rendering issues ([a426b7e](https://github.com/advanced-rest-client/api-responses-document/commit/a426b7efe3b78d9020dfe50ee88cbc12642ec056))
+* Fixing travis configuration ([5df0384](https://github.com/advanced-rest-client/api-responses-document/commit/5df03848bc3bda969780a39736a92208baed044e))
+* update api-annotation-document version ([5bdcbf1](https://github.com/advanced-rest-client/api-responses-document/commit/5bdcbf1f3f83a687e9a812188b3364077780b785))
+
 <a name="2.0.5"></a>
 ## 2.0.5 (2018-08-28)
 
@@ -276,5 +296,3 @@
  [5df0384](https://github.com/advanced-rest-client/api-responses-document/commit/5df03848bc3bda969780a39736a92208baed044e) by Paweł Psztyć
 * Update: Updated Travis configuration to connect to Sauce Labs.
  [4415116](https://github.com/advanced-rest-client/api-responses-document/commit/44151169c891271d808cfd95cd7466a3b4dcb0bd) by Pawel Psztyc
-
-
