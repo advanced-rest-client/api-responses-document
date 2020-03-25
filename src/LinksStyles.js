@@ -16,17 +16,18 @@ export default css`
   font-weight: 500;
 }
 
-.block-properties {
+.operation-id {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   margin: 0.2em 0;
 }
 
-.label {
+.operation-name {
+  margin-left: 8px;
   font-weight: 500;
 }
 
-.mappings-header {
-  font-weight: 500;
+.mapping-table {
+  margin: 12px 0 !important;
 }
 `;

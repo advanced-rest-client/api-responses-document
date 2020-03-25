@@ -100,7 +100,12 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
        * When enabled it renders external types as links and dispatches
        * `api-navigation-selection-changed` when clicked.
        */
-      graph: { type: Boolean }
+      graph: { type: Boolean },
+      /**
+       * A computed list of OAS' Links in currently selected response.
+       * @type {Array<Object>|undefined}
+       */
+      links: { type: Array },
     };
   }
 

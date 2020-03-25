@@ -21,9 +21,7 @@ export class ApiLinksDocument extends AmfHelperMixin(LitElement) {
     }
     return html`
     <style>${styles}</style>
-    <div class="links-header">
-      Links
-    </div>
+    <div class="links-header" role="heading" aria-level="2">Links</div>
     ${links.map((link) => this._linkTemplate(link))}
     `;
   }
@@ -31,9 +29,7 @@ export class ApiLinksDocument extends AmfHelperMixin(LitElement) {
   _linkTemplate(link) {
     const name = this._getValue(link, this.ns.aml.vocabularies.core.name);
     return html`
-    <div class="link-header">
-      ${name}
-    </div>
+    <div class="link-header">${name}</div>
     ${this._linkOperationTemplate(link)}
     <div slot="markdown-html">
       ${this._mappingsTemplate(link)}
@@ -47,8 +43,8 @@ export class ApiLinksDocument extends AmfHelperMixin(LitElement) {
       return '';
     }
     return html`
-    <div class="block-properties">
-      <span class="label">Opeartion ID</span>
+    <div class="operation-id">
+      <span class="label">Opeartion ID:</span>
       <span class="operation-name">${opId}</span>
     </div>
     `;
@@ -61,10 +57,7 @@ export class ApiLinksDocument extends AmfHelperMixin(LitElement) {
       return '';
     }
     return html`
-    <div class="mappings-header">
-      Mappings
-    </div>
-    <table>
+    <table class="mapping-table">
       <tr>
         <th>Variable</th>
         <th>Expression</th>

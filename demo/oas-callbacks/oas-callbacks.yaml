@@ -64,6 +64,16 @@ components:
         triggerAuthor:
           type: string
           description: A person triggered the event
+    paymentRequest:
+      title: Payment
+      type: object
+      properties:
+        token:
+          type: string
+          description: Payment token generated for this request
+        amount:
+          type: number
+          description: The payment amount.
 paths:
   /subscribe:
     post:
@@ -91,6 +101,17 @@ paths:
               parameters:
                 one: $response.body#/one
                 two: $response.body#/two
+        402:
+          description: Not OK. Payment is required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/paymentRequest'
+          links:
+            paymentUrl:
+              parameters:
+                paymentUrl: $response.body#/info.paymentUri
+                paymentToken: $response.body#/info.token
       callbacks:
         inProgress:
           '{$request.body#/inProgressUrl}':
