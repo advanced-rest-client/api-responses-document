@@ -16,12 +16,6 @@ module.exports = (config) => {
           type: 'module'
         },
         {
-          pattern: require.resolve('chai/chai.js')
-        },
-        {
-          pattern: require.resolve('axe-core/axe.min.js')
-        },
-        {
           pattern: require.resolve('@anypoint-web-components/anypoint-styles/colors.js'),
           type: 'module'
         },

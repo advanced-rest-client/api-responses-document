@@ -1,39 +1,32 @@
 import { html } from 'lit-html';
-import { LitElement } from 'lit-element';
-import { ApiDemoPageBase } from '@advanced-rest-client/arc-demo-helper/ApiDemoPage.js';
-import '@api-components/raml-aware/raml-aware.js';
-import '@api-components/api-navigation/api-navigation.js';
+import { ApiDemoPage } from '@advanced-rest-client/arc-demo-helper';
 import '@anypoint-web-components/anypoint-styles/colors.js';
 import '../api-responses-document.js';
 
-import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
-class DemoElement extends AmfHelperMixin(LitElement) {}
 
-window.customElements.define('demo-element', DemoElement);
-class ApiDemo extends ApiDemoPageBase {
+class ApiDemo extends ApiDemoPage {
   constructor() {
     super();
-    this.hasData = false;
+    this.componentName = 'api-responses-document';
+    this.renderViewControls = true;
+
+    this.initObservableProperties([
+      'compatibility',
+      'returns',
+    ]);
+
+    this.demoStates = ['Material', 'Anypoint'];
+    this._demoStateHandler = this._demoStateHandler.bind(this);
   }
 
-  get hasData() {
-    return this._hasData;
-  }
-
-  set hasData(value) {
-    this._setObservableProperty('hasData', value);
-  }
-
-  get returns() {
-    return this._returns;
-  }
-
-  set returns(value) {
-    this._setObservableProperty('returns', value);
-  }
-
-  get helper() {
-    return document.getElementById('helper');
+  _demoStateHandler(e) {
+    const { value } = e.detail;
+    this.compatibility = value === 1;
+    if (this.compatibility) {
+      document.body.classList.add('anypoint');
+    } else {
+      document.body.classList.remove('anypoint');
+    }
   }
 
   _navChanged(e) {
@@ -46,21 +39,91 @@ class ApiDemo extends ApiDemoPageBase {
   }
 
   setData(selected) {
-    const helper = this.helper;
-    const webApi = helper._computeWebApi(this.amf);
-    const method = helper._computeMethodModel(webApi, selected);
-    this.returns = helper._computeReturns(method);
+    const webApi = this._computeWebApi(this.amf);
+    const method = this._computeMethodModel(webApi, selected);
+    this.returns = this._computeReturns(method);
     this.hasData = true;
   }
 
+  _apiListTemplate() {
+    return [
+      ['demo-api', 'Demo API'],
+      ['oas-callbacks', 'OAS 3 callbacks'],
+    ].map(([file, label]) => html`
+      <anypoint-item data-src="${file}-compact.json">${label} - compact model</anypoint-item>
+      <anypoint-item data-src="${file}.json">${label}</anypoint-item>
+    `);
+  }
+
+  _demoTemplate() {
+    const {
+      demoStates,
+      darkThemeActive,
+      compatibility,
+      amf,
+      returns,
+      narrow,
+    } = this;
+    return html `
+    <section class="documentation-section">
+      <h3>Interactive demo</h3>
+      <p>
+        This demo lets you preview the API response document element with various
+        configuration options.
+      </p>
+
+      <arc-interactive-demo
+        .states="${demoStates}"
+        @state-chanegd="${this._demoStateHandler}"
+        ?dark="${darkThemeActive}"
+      >
+        <api-responses-document
+          .amf="${amf}"
+          .returns="${returns}"
+          ?narrow="${narrow}"
+          ?compatibility="${compatibility}"
+          slot="content"
+        ></api-responses-document>
+      </arc-interactive-demo>
+    </section>`;
+  }
+
+  _introductionTemplate() {
+    return html `
+      <section class="documentation-section">
+        <h3>Introduction</h3>
+        <p>
+          A web component to render documentation for a HTTP response. The view is rendered
+          using the AMF data model.
+        </p>
+      </section>
+    `;
+  }
+
+  _usageTemplate() {
+    return html `
+      <section class="documentation-section">
+        <h2>Usage</h2>
+        <p>API responses document comes with 2 predefied styles:</p>
+        <ul>
+          <li><b>Material Design</b> (default)</li>
+          <li>
+            <b>Compatibility</b> - To provide compatibility with Anypoint design, use
+            <code>compatibility</code> property
+          </li>
+        </ul>
+      </section>`;
+  }
+
   contentTemplate() {
-    const { returns } = this;
     return html`
-    <demo-element id="helper" .amf="${this.amf}"></demo-element>
-    <raml-aware .api="${this.amf}" scope="model"></raml-aware>
+    <h2 class="centered main">API responses document</h2>
     ${this.hasData ?
-      html`<api-responses-document aware="model" .returns="${returns}" ?narrow="${this.narrowActive}"></api-responses-document>` :
+      this._demoTemplate() :
       html`<p>Select a HTTP method in the navigation to see the demo.</p>`}
+
+      ${this._introductionTemplate()}
+      ${this._usageTemplate()}
     `;
   }
 }

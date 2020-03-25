@@ -8,22 +8,22 @@ module.exports = (config) => {
     sauceLabs: {
       testName: 'api-responses-document',
     },
-    // client: {
-    //   mocha: {
-    //     timeout : 6000
-    //   }
-    // }
+    client: {
+      mocha: {
+        timeout : 10000
+      }
+    }
   });
   // if you want to change default browsers
-  slConfig.browsers = [
-    'SL_Chrome',
-    'SL_Chrome-1',
-    'SL_Firefox',
-    'SL_Firefox-1',
-    'SL_Safari',
-    'SL_Safari-1',
-    // 'SL_EDGE'
-  ];
+  // slConfig.browsers = [
+  //   'SL_Chrome',
+  //   'SL_Chrome-1',
+  //   'SL_Firefox',
+  //   'SL_Firefox-1',
+  //   'SL_Safari',
+  //   'SL_Safari-1',
+  //   // 'SL_EDGE'
+  // ];
   config.set(merge(createBaseConfig(config), slConfig));
   return config;
 };

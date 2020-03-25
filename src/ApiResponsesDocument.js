@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
 import '@api-components/raml-aware/raml-aware.js';
 import markdownStyles from '@advanced-rest-client/markdown-styles/markdown-styles.js';
@@ -8,6 +8,8 @@ import '@api-components/api-headers-document/api-headers-document.js';
 import '@api-components/api-body-document/api-body-document.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
+import styles from './Styles.js';
+import '../api-links-document.js';
 /**
  * `api-responses-document`
  *
@@ -26,91 +28,14 @@ import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
  *
  * @customElement
  * @demo demo/index.html
- * @memberof ApiElements
  * @appliesMixin ApiElements.AmfHelperMixin
  */
 export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   get styles() {
     return [
       markdownStyles,
-      css`:host {
-        display: block;
-        font-size: var(--arc-font-body1-font-size);
-        font-weight: var(--arc-font-body1-font-weight);
-        line-height: var(--arc-font-body1-line-height);
-      }
-
-      arc-marked {
-        margin-top: 8px;
-        padding: 0;
-      }
-
-      .no-info {
-        font-style: italic;
-      }
-
-      .codes-selector {
-        border-bottom: 1px #e5e5e5 solid;
-      }`
+      styles,
     ];
-  }
-
-  _codesSelectorTemplate() {
-    const { codes, selected } = this;
-    if (!codes || !codes.length) {
-      return '';
-    }
-    return html`
-    <div class="codes-selector">
-      <anypoint-tabs
-        .selected="${selected}"
-        ?compatibility="${this.compatibility}"
-        @selected-changed="${this._tabsHandler}">
-        ${codes.map((item) => html`<anypoint-tab>${item}</anypoint-tab>`)}
-      </anypoint-tabs>
-    </div>`;
-  }
-
-  render() {
-    const {
-      _description,
-      _payload,
-      _headers,
-      _hasCustomProperties,
-      aware,
-      _selectedResponse,
-      amf,
-      narrow,
-      compatibility,
-      graph
-    } = this;
-    const hasDescription = !!_description;
-    const hasPayload = !!(_payload && _payload.length);
-    const hasHeaders = !!(_headers && _headers.length);
-    const noDocs = this._computeNoDocs(_hasCustomProperties, hasHeaders, hasPayload, hasDescription);
-    return html`<style>${this.styles}</style>
-    ${aware ?
-      html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>` : ''}
-    ${this._codesSelectorTemplate()}
-    ${_hasCustomProperties ? html`<api-annotation-document ?legacy="${compatibility}" .shape="${_selectedResponse}"></api-annotation-document>`:''}
-    ${_description ? html`<arc-marked .markdown="${_description}" sanitize>
-      <div slot="markdown-html" class="markdown-body"></div>
-    </arc-marked>` : ''}
-    ${hasHeaders ? html`<api-headers-document
-      opened
-      .amf="${amf}"
-      .headers="${_headers}"
-      ?compatibility="${compatibility}"
-      ?narrow="${narrow}"
-      ?graph="${graph}"></api-headers-document>` : ''}
-    ${hasPayload ? html`<api-body-document
-      .amf="${amf}"
-      .body="${_payload}"
-      ?narrow="${narrow}"
-      ?compatibility="${compatibility}"
-      ?graph="${graph}"
-      opened></api-body-document>` : ''}
-    ${noDocs ? html`<p class="no-info">No description provided</p>` : ''}`;
   }
 
   static get properties() {
@@ -175,7 +100,12 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
        * When enabled it renders external types as links and dispatches
        * `api-navigation-selection-changed` when clicked.
        */
-      graph: { type: Boolean }
+      graph: { type: Boolean },
+      /**
+       * A computed list of OAS' Links in currently selected response.
+       * @type {Array<Object>|undefined}
+       */
+      links: { type: Array },
     };
   }
 
@@ -256,6 +186,38 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this._payload = this._computePayload(value);
     this._headers = this._computeHeaders(value);
     this._hasCustomProperties = this._computeHasCustomProperties(value);
+    this.links = this._computeLinks(value);
+  }
+
+  get hasPayload() {
+    const {
+      _payload,
+    } = this;
+    return !!(_payload && _payload.length);
+  }
+
+  get hasHeaders() {
+    const {
+      _headers,
+    } = this;
+    return !!(_headers && _headers.length);
+  }
+
+  get hasDescription() {
+    const {
+      _description,
+    } = this;
+    return !!_description;
+  }
+
+  get noDocumentation() {
+    const {
+      hasDescription,
+      hasPayload,
+      hasHeaders,
+      _hasCustomProperties,
+    } = this;
+    return !(_hasCustomProperties || hasHeaders || hasPayload || hasDescription);
   }
 
   async __amfChanged() {
@@ -324,10 +286,6 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     }
   }
 
-  _computeNoDocs(hasCustomProperties, hasHeaders, hasPayload, hasDescription) {
-    return !(hasCustomProperties || hasHeaders || hasPayload || hasDescription);
-  }
-
   _apiChangedHandler(e) {
     const { value } = e.detail;
     this.amf = value;
@@ -335,5 +293,134 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
 
   _tabsHandler(e) {
     this.selected = e.detail.value;
+  }
+
+  _computeLinks(response) {
+    if (!response) {
+      return null;
+    }
+    const key = this._getAmfKey(this.ns.aml.vocabularies.apiContract.link);
+    return this._ensureArray(response[key]);
+  }
+
+  render() {
+    return html`<style>${this.styles}</style>
+    ${this._awareTemplate()}
+    ${this._codesSelectorTemplate()}
+    ${this._annotationsTemplate()}
+    ${this._descriptionTemplate()}
+    ${this._headersTemplate()}
+    ${this._payloadTemplate()}
+    ${this._linksTemplate()}
+    ${this.noDocumentation ? html`<p class="no-info">No description provided</p>` : ''}`;
+  }
+
+  _codesSelectorTemplate() {
+    const { codes, selected } = this;
+    if (!codes || !codes.length) {
+      return '';
+    }
+    return html`
+    <div class="codes-selector">
+      <anypoint-tabs
+        .selected="${selected}"
+        ?compatibility="${this.compatibility}"
+        @selected-changed="${this._tabsHandler}">
+        ${codes.map((item) => html`<anypoint-tab>${item}</anypoint-tab>`)}
+      </anypoint-tabs>
+    </div>`;
+  }
+
+  _awareTemplate() {
+    const {
+      aware,
+    } = this;
+    if (!aware) {
+      return '';
+    }
+    return html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>`;
+  }
+
+  _annotationsTemplate() {
+    const {
+      _hasCustomProperties,
+      compatibility,
+      _selectedResponse,
+    } = this;
+    if (!_hasCustomProperties) {
+      return '';
+    }
+    return html`<api-annotation-document
+      ?compatibility="${compatibility}"
+      .shape="${_selectedResponse}"
+    ></api-annotation-document>`;
+  }
+
+  _descriptionTemplate() {
+    const {
+      _description,
+    } = this;
+    if (!_description) {
+      return '';
+    }
+    return html`<arc-marked .markdown="${_description}" sanitize>
+      <div slot="markdown-html" class="markdown-body"></div>
+    </arc-marked>`;
+  }
+
+  _headersTemplate() {
+    const {
+      _headers,
+      amf,
+      narrow,
+      compatibility,
+      graph
+    } = this;
+    const hasHeaders = !!(_headers && _headers.length);
+    if (!hasHeaders) {
+      return '';
+    }
+    return html`<api-headers-document
+      opened
+      .amf="${amf}"
+      .headers="${_headers}"
+      ?compatibility="${compatibility}"
+      ?narrow="${narrow}"
+      ?graph="${graph}"
+    ></api-headers-document>`;
+  }
+
+  _payloadTemplate() {
+    const {
+      _payload,
+      amf,
+      narrow,
+      compatibility,
+      graph
+    } = this;
+    const hasPayload = !!(_payload && _payload.length);
+    if (!hasPayload) {
+      return '';
+    }
+    return html`<api-body-document
+      .amf="${amf}"
+      .body="${_payload}"
+      ?narrow="${narrow}"
+      ?compatibility="${compatibility}"
+      ?graph="${graph}"
+      opened></api-body-document>`
+  }
+
+  _linksTemplate() {
+    const { links, amf } = this;
+    if (!links || !links.length) {
+      return '';
+    }
+    return html`
+    <api-links-document
+      .amf="${amf}"
+      .links="${links}"
+    ></api-links-document>
+    `;
   }
 }

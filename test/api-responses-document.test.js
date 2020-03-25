@@ -1,4 +1,4 @@
-import { fixture, assert, nextFrame, aTimeout } from '@open-wc/testing';
+import { fixture, assert, nextFrame, aTimeout, html } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
 import '../api-responses-document.js';
 
@@ -11,20 +11,19 @@ describe('<api-responses-document>', function() {
     return (await fixture(`<api-responses-document aware="test"></api-responses-document>`));
   }
 
-  function getResponseModel(element, endpointPath, methodIndex) {
-    const webapi = element._computeWebApi(element.amf);
-    const endpoint = element._computeEndpointByPath(webapi, endpointPath);
-    const opKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.supportedOperation);
-    const method = element._ensureArray(endpoint[opKey])[methodIndex];
-    return element._computeReturns(method);
+  async function modelFixture(amf, returns) {
+    return (await fixture(html`<api-responses-document
+      .amf="${amf}"
+      .returns="${returns}"
+    ></api-responses-document>`));
   }
 
   [
     ['Full model', false],
     ['Compact model', true]
   ]
-  .forEach((item) => {
-    describe(item[0], () => {
+  .forEach(([label, compact]) => {
+    describe(label, () => {
       describe('Basic', () => {
         it('Adds raml-aware to the DOM if aware is set', async () => {
           const element = await awareFixture();
@@ -87,10 +86,10 @@ describe('<api-responses-document>', function() {
       describe('Fully defined response', () => {
         let element;
         beforeEach(async () => {
-          const amf = await AmfLoader.load(item[1]);
+          const amf = await AmfLoader.load(compact);
           element = await basicFixture();
           element.amf = amf;
-          element.returns = getResponseModel(element, '/people', 2);
+          element.returns = AmfLoader.responseModel(amf, '/people', 'put');
           await aTimeout();
         });
 
@@ -159,10 +158,10 @@ describe('<api-responses-document>', function() {
       describe('Partially defined response', () => {
         let element;
         beforeEach(async () => {
-          const amf = await AmfLoader.load(item[1]);
+          const amf = await AmfLoader.load(compact);
           element = await basicFixture();
           element.amf = amf;
-          element.returns = getResponseModel(element, '/people', 2);
+          element.returns = AmfLoader.responseModel(amf, '/people', 'put');
           await aTimeout();
         });
 
@@ -210,10 +209,11 @@ describe('<api-responses-document>', function() {
       describe('Empty response', () => {
         let element;
         beforeEach(async () => {
-          const amf = await AmfLoader.load(item[1]);
+          const amf = await AmfLoader.load(compact);
           element = await basicFixture();
           element.amf = amf;
-          element.returns = getResponseModel(element, '/no-desc', 0);
+          element.returns = AmfLoader.responseModel(amf, '/no-desc', 'get');
+
           await aTimeout();
         });
 
@@ -243,6 +243,59 @@ describe('<api-responses-document>', function() {
           const node = element.shadowRoot.querySelector('.no-info');
           assert.ok(node);
         });
+      });
+
+      describe('Links rendering', () => {
+        let element;
+        let amf;
+
+        before(async () => {
+          amf = await AmfLoader.load(compact, 'oas-callbacks');
+        });
+
+        beforeEach(async () => {
+          const returns = AmfLoader.responseModel(amf, '/subscribe', 'post');
+          element = await modelFixture(amf, returns);
+        });
+
+        it('computes list of links', () => {
+          assert.typeOf(element.links, 'array');
+          assert.lengthOf(element.links, 2);
+        });
+
+        it('renders api-links-document', () => {
+          const node = element.shadowRoot.querySelector('api-links-document');
+          assert.ok(node);
+        });
+      });
+    });
+  });
+
+  describe('a11y', () => {
+    let ramlApi;
+    let oasApi;
+
+    before(async () => {
+      ramlApi = await AmfLoader.load(true);
+      oasApi = await AmfLoader.load(true, 'oas-callbacks');
+    });
+
+    it('is accessible with model data', async () => {
+      const responses = AmfLoader.responseModel(ramlApi, '/people', 'put');
+      const element = await modelFixture(oasApi, responses);
+      // button-name - Safari has some issue with processing toggle button in
+      // headers document. For no reason. I am putting it here temporaily,
+      // hoping the updated test library version will have this fixed.
+      await assert.isAccessible(element, {
+        ignoredRules: ['color-contrast', 'button-name']
+      });
+    });
+
+    it('is accessible with OAS links', async () => {
+      const responses = AmfLoader.responseModel(oasApi, '/subscribe', 'post');
+      const element = await modelFixture(oasApi, responses);
+      await assert.isAccessible(element, {
+        ignoredRules: ['color-contrast', 'button-name']
       });
     });
   });
