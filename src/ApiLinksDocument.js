@@ -44,7 +44,7 @@ export class ApiLinksDocument extends AmfHelperMixin(LitElement) {
     }
     return html`
     <div class="operation-id">
-      <span class="label">Opeartion ID:</span>
+      <span class="label">Operation ID:</span>
       <span class="operation-name">${opId}</span>
     </div>
     `;
