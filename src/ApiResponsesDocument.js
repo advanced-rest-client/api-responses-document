@@ -408,6 +408,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       ?narrow="${narrow}"
       ?compatibility="${compatibility}"
       ?graph="${graph}"
+      renderreadonly
       opened></api-body-document>`
   }
 
