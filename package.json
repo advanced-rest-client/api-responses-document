@@ -29,7 +29,7 @@
     "@anypoint-web-components/anypoint-tabs": "^0.1.10",
     "@api-components/amf-helper-mixin": "^4.0.24",
     "@api-components/api-annotation-document": "^4.0.3",
-    "@api-components/api-body-document": "^4.0.7",
+    "@api-components/api-body-document": "^4.1.0",
     "@api-components/api-headers-document": "^4.0.4",
     "@api-components/raml-aware": "^3.0.0",
     "lit-element": "^2.3.1"
