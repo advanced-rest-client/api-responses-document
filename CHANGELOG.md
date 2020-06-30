@@ -390,3 +390,46 @@ All notable changes to this project will be documented in this file. See [standa
  [4415116](https://github.com/advanced-rest-client/api-responses-document/commit/44151169c891271d808cfd95cd7466a3b4dcb0bd) by Pawel Psztyc
 
 
+<a name="4.1.2"></a>
+## [4.1.2](https://github.com/advanced-rest-client/api-responses-document/compare/4.0.2...4.1.2) (2020-06-30)
+
+### Build
+
+* bumping version [dc75c9e](https://github.com/advanced-rest-client/api-responses-document/commit/dc75c9e69dae719ab7e03953105f5d07829b78d1) by Leandro Bauret
+
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [3cb25f7](https://github.com/advanced-rest-client/api-responses-document/commit/3cb25f769dbf249b08169d1394c65cdc1236e0e0) by Ci agent
+* updating types [5241b2c](https://github.com/advanced-rest-client/api-responses-document/commit/5241b2cb520ae868e2281c08e04d81c58f8c0792) by Pawel
+* removing generated model files from the repository [f7cba4d](https://github.com/advanced-rest-client/api-responses-document/commit/f7cba4d4cc285155487b77bfb38b8977863dab56) by Pawel
+* removing git add command from lint-staged config [ca5da14](https://github.com/advanced-rest-client/api-responses-document/commit/ca5da141c44ea821971f968a53747110474a4a47) by Pawel
+* upgrading dependencies [8c50e34](https://github.com/advanced-rest-client/api-responses-document/commit/8c50e34db572fd6e846c0e24bbf07862aad4f941) by Pawel
+
+
+### Documentation
+
+* upgrading demo page [fd219e2](https://github.com/advanced-rest-client/api-responses-document/commit/fd219e2ccf01aa3ed0ee5f10cf58698be525fe78) by Pawel
+
+
+### Features
+
+* adding OAS' 3 links [3e4d749](https://github.com/advanced-rest-client/api-responses-document/commit/3e4d7499e0ecd0d9b1ada48744708c260f8e1c0b) by Paweł Psztyć
+
+
+### Bug Fixes
+
+* typo in Links documentation [13ed2df](https://github.com/advanced-rest-client/api-responses-document/commit/13ed2dfb3a6fa74949079f45cbb770ecc5e7722b) by Leandro Bauret
+
+
+### Refactor
+
+* refactoring templates [4c75b11](https://github.com/advanced-rest-client/api-responses-document/commit/4c75b11c21c22eafba7890b67d1570dd3155a9b7) by Pawel
+* moving styles into a separate file [a5f9059](https://github.com/advanced-rest-client/api-responses-document/commit/a5f90593e2ecd7730326ecca62f41fa048ac17ac) by Pawel
+
+
+### Testing
+
+* removing compatibility configuration [4aab734](https://github.com/advanced-rest-client/api-responses-document/commit/4aab7346f219dafcc889f64291ec4cf38fefef0e) by Pawel
+
+
