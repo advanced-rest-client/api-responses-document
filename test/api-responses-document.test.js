@@ -153,6 +153,10 @@ describe('<api-responses-document>', function() {
           const node = element.shadowRoot.querySelector('api-body-document');
           assert.ok(node);
         });
+
+        it('renders api-body-document with renderReadOnly props', () => {
+          assert.isTrue(element.shadowRoot.querySelector('api-body-document').renderReadOnly);
+        });
       });
 
       describe('Partially defined response', () => {
