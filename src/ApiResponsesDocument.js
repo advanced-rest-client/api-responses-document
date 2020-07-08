@@ -323,6 +323,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     return html`
     <div class="codes-selector">
       <anypoint-tabs
+        scrollable
         .selected="${selected}"
         ?compatibility="${this.compatibility}"
         @selected-changed="${this._tabsHandler}">
