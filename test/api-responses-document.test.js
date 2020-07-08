@@ -115,6 +115,10 @@ describe('<api-responses-document>', function() {
           assert.equal(nodes[2].innerText.trim(), '400',  '400 status is rendered');
         });
 
+        it('renders anypoint-tabs with scrollable', () => {
+          assert.isTrue(element.shadowRoot.querySelector('anypoint-tabs').scrollable);
+        });
+
         it('selected is computed', () => {
           assert.deepEqual(element.selected, 0);
         });
