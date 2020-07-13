@@ -433,3 +433,29 @@ All notable changes to this project will be documented in this file. See [standa
 * removing compatibility configuration [4aab734](https://github.com/advanced-rest-client/api-responses-document/commit/4aab7346f219dafcc889f64291ec4cf38fefef0e) by Pawel
 
 
+<a name="4.1.3"></a>
+## [4.1.3](https://github.com/advanced-rest-client/api-responses-document/compare/4.1.0...4.1.3) (2020-07-13)
+
+### Build
+
+* bump version [a9d54dc](https://github.com/advanced-rest-client/api-responses-document/commit/a9d54dcce157cb6fdb58945268a54019e9f7af3d) by Carolina Wright
+* bumping version [dc75c9e](https://github.com/advanced-rest-client/api-responses-document/commit/dc75c9e69dae719ab7e03953105f5d07829b78d1) by Leandro Bauret
+
+
+### Update
+
+* [ci skip] automated merge master->stage. syncing main branches [bcbdf63](https://github.com/advanced-rest-client/api-responses-document/commit/bcbdf63d1385ee0a5c012ca3cbf4f8c99cd7eb39) by Ci agent
+* [ci skip] automated merge master->stage. syncing main branches [3cb25f7](https://github.com/advanced-rest-client/api-responses-document/commit/3cb25f769dbf249b08169d1394c65cdc1236e0e0) by Ci agent
+
+
+### Bug Fixes
+
+* apic-335 make code tabs scrollable [3b29826](https://github.com/advanced-rest-client/api-responses-document/commit/3b2982623c5475bc742ee025b0cc7e112d320705) by Carolina Wright
+* typo in Links documentation [13ed2df](https://github.com/advanced-rest-client/api-responses-document/commit/13ed2dfb3a6fa74949079f45cbb770ecc5e7722b) by Leandro Bauret
+
+
+### Testing
+
+* scrollable property passed to anypoint-tabs [6d3d62a](https://github.com/advanced-rest-client/api-responses-document/commit/6d3d62a33e326934c4628d76ec9bf238b06b9693) by Carolina Wright
+
+
