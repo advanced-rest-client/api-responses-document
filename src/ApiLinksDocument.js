@@ -1,11 +1,11 @@
 import { LitElement, html } from 'lit-element';
-import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
-import markdownStyles from '@advanced-rest-client/markdown-styles/markdown-styles.js';
-import styles from './LinksStyles.js';
+import { AmfHelperMixin } from '@api-components/amf-helper-mixin';
+import markdownStyles from '@advanced-rest-client/markdown-styles';
+import elementStyles from './LinksStyles.js';
 
 export class ApiLinksDocument extends AmfHelperMixin(LitElement) {
   get styles() {
-    return [markdownStyles, styles];
+    return [markdownStyles, elementStyles];
   }
 
   static get properties() {
@@ -69,10 +69,10 @@ export class ApiLinksDocument extends AmfHelperMixin(LitElement) {
 
   _mappingTemplate(mapping) {
     const exp = this._getValue(mapping, this.ns.aml.vocabularies.apiContract.linkExpression)
-    const vare = this._getValue(mapping, this.ns.aml.vocabularies.apiContract.templateVariable)
+    const vars = this._getValue(mapping, this.ns.aml.vocabularies.apiContract.templateVariable)
     return html`
     <tr>
-      <td>${vare}</td>
+      <td>${vars}</td>
       <td>${exp}</td>
     </tr>
     `;

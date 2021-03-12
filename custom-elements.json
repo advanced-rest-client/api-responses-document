@@ -1,0 +1,138 @@
+{
+  "version": "experimental",
+  "tags": [
+    {
+      "name": "api-links-document",
+      "path": "./api-links-document.js",
+      "properties": [
+        {
+          "name": "styles",
+          "type": "CSSResult"
+        },
+        {
+          "name": "links",
+          "type": "array"
+        },
+        {
+          "name": "ns",
+          "description": "A namespace for AMF model.",
+          "type": "Namespace"
+        },
+        {
+          "name": "amf",
+          "description": "Generated AMF json/ld model form the API spec.\nThe element assumes the object of the first array item to be a\ntype of `\"http://raml.org/vocabularies/document#Document`\non AMF vocabulary.\n\nIt is only useful for the element to resolve references.",
+          "type": "object | object[] | undefined"
+        }
+      ]
+    },
+    {
+      "name": "api-responses-document",
+      "path": "./api-responses-document.js",
+      "description": "`api-responses-document`\n\nA documentation for method responses based on AMF model.\n\nIt renders a selector of available status codes in the responses array.\nThis is computed from `returns` property which must be an array\nas a value of AMF's `http://www.w3.org/ns/hydra/core#returns` property\nof the `method` shape.\n\nStatus codes are sorted before rendering.\n\nIn the documentation part it renders annotations (AMF custom properties)\nadded to the response, headers and body.",
+      "attributes": [
+        {
+          "name": "selected",
+          "description": "Selected index of a status code from the selector.",
+          "type": "number"
+        },
+        {
+          "name": "narrow",
+          "description": "Set to render a mobile friendly view.",
+          "type": "boolean"
+        },
+        {
+          "name": "legacy",
+          "type": "boolean",
+          "deprecatedMessage": "Use `compatibility` instead."
+        },
+        {
+          "name": "compatibility",
+          "description": "Enables compatibility with Anypoint components.",
+          "type": "boolean"
+        },
+        {
+          "name": "graph",
+          "description": "When enabled it renders external types as links and dispatches\n`api-navigation-selection-changed` when clicked.",
+          "type": "boolean"
+        }
+      ],
+      "properties": [
+        {
+          "name": "styles",
+          "type": "CSSResult[]"
+        },
+        {
+          "name": "returns",
+          "description": "The `returns` property of the method AMF model.",
+          "type": "array"
+        },
+        {
+          "name": "selected",
+          "attribute": "selected",
+          "description": "Selected index of a status code from the selector.",
+          "type": "number"
+        },
+        {
+          "name": "narrow",
+          "attribute": "narrow",
+          "description": "Set to render a mobile friendly view.",
+          "type": "boolean"
+        },
+        {
+          "name": "legacy",
+          "attribute": "legacy",
+          "type": "boolean",
+          "deprecatedMessage": "Use `compatibility` instead."
+        },
+        {
+          "name": "compatibility",
+          "attribute": "compatibility",
+          "description": "Enables compatibility with Anypoint components.",
+          "type": "boolean"
+        },
+        {
+          "name": "graph",
+          "attribute": "graph",
+          "description": "When enabled it renders external types as links and dispatches\n`api-navigation-selection-changed` when clicked.",
+          "type": "boolean"
+        },
+        {
+          "name": "links",
+          "description": "A computed list of OAS' Links in currently selected response.",
+          "type": "any[] | undefined"
+        },
+        {
+          "name": "codes",
+          "description": "List of recognized codes.",
+          "type": "string[] | undefined"
+        },
+        {
+          "name": "hasPayload",
+          "type": "boolean"
+        },
+        {
+          "name": "hasHeaders",
+          "type": "boolean"
+        },
+        {
+          "name": "hasDescription",
+          "type": "boolean"
+        },
+        {
+          "name": "noDocumentation",
+          "type": "boolean"
+        },
+        {
+          "name": "ns",
+          "description": "A namespace for AMF model.",
+          "type": "Namespace"
+        },
+        {
+          "name": "amf",
+          "description": "Generated AMF json/ld model form the API spec.\nThe element assumes the object of the first array item to be a\ntype of `\"http://raml.org/vocabularies/document#Document`\non AMF vocabulary.\n\nIt is only useful for the element to resolve references.",
+          "type": "object | object[] | undefined"
+        }
+      ]
+    }
+  ]
+}

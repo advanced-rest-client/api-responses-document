@@ -2,12 +2,17 @@ import { fixture, assert, html } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
 import '../api-links-document.js';
 
-describe('<api-links-document>', function() {
+/** @typedef {import('..').ApiLinksDocument} ApiLinksDocument */
+
+describe('ApiLinksDocument', () => {
+  /** 
+   * @returns {Promise<ApiLinksDocument>}
+   */
   async function modelFixture(amf, links) {
-    return (await fixture(html`<api-links-document
+    return fixture(html`<api-links-document
       .amf="${amf}"
       .links="${links}"
-    ></api-links-document>`));
+    ></api-links-document>`);
   }
 
   [

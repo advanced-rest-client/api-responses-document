@@ -1,6 +1,8 @@
 import { html } from 'lit-html';
 import { ApiDemoPage } from '@advanced-rest-client/arc-demo-helper';
+import '@advanced-rest-client/arc-demo-helper/arc-interactive-demo.js';
 import '@anypoint-web-components/anypoint-styles/colors.js';
+import '@anypoint-web-components/anypoint-item/anypoint-item.js';
 import '../api-responses-document.js';
 
 
@@ -74,7 +76,7 @@ class ApiDemo extends ApiDemoPage {
 
       <arc-interactive-demo
         .states="${demoStates}"
-        @state-chanegd="${this._demoStateHandler}"
+        @state-changed="${this._demoStateHandler}"
         ?dark="${darkThemeActive}"
       >
         <api-responses-document
@@ -104,7 +106,7 @@ class ApiDemo extends ApiDemoPage {
     return html `
       <section class="documentation-section">
         <h2>Usage</h2>
-        <p>API responses document comes with 2 predefied styles:</p>
+        <p>API responses document comes with 2 predefined styles:</p>
         <ul>
           <li><b>Material Design</b> (default)</li>
           <li>
@@ -129,4 +131,3 @@ class ApiDemo extends ApiDemoPage {
 }
 const instance = new ApiDemo();
 instance.render();
-window._demo = instance;
