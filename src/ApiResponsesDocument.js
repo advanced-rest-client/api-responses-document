@@ -1,7 +1,6 @@
 import { LitElement, html } from 'lit-element';
-import { AmfHelperMixin } from '@api-components/amf-helper-mixin/amf-helper-mixin.js';
-import '@api-components/raml-aware/raml-aware.js';
-import markdownStyles from '@advanced-rest-client/markdown-styles/markdown-styles.js';
+import { AmfHelperMixin } from '@api-components/amf-helper-mixin';
+import markdownStyles from '@advanced-rest-client/markdown-styles';
 import '@advanced-rest-client/arc-marked/arc-marked.js';
 import '@api-components/api-annotation-document/api-annotation-document.js';
 import '@api-components/api-headers-document/api-headers-document.js';
@@ -10,6 +9,7 @@ import '@anypoint-web-components/anypoint-tabs/anypoint-tabs.js';
 import '@anypoint-web-components/anypoint-tabs/anypoint-tab.js';
 import styles from './Styles.js';
 import '../api-links-document.js';
+
 /**
  * `api-responses-document`
  *
@@ -22,13 +22,8 @@ import '../api-links-document.js';
  *
  * Status codes are sorted before rendering.
  *
- * In the documentation part it renders annotations (AMF custom proeprties)
+ * In the documentation part it renders annotations (AMF custom properties)
  * added to the response, headers and body.
- *
- *
- * @customElement
- * @demo demo/index.html
- * @appliesMixin ApiElements.AmfHelperMixin
  */
 export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   get styles() {
@@ -40,10 +35,6 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
 
   static get properties() {
     return {
-      /**
-       * `raml-aware` scope property to use.
-       */
-      aware: { type: String },
       /**
        * The `returns` property of the method AMF model.
        *
@@ -87,7 +78,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       /**
        * Set to render a mobile friendly view.
        */
-       narrow: { type: Boolean },
+      narrow: { type: Boolean },
        /**
        * @deprecated Use `compatibility` instead
        */
@@ -144,9 +135,10 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this.requestUpdate('selected', old);
     this._selectedResponse = this._computeSelectedResponse();
   }
+
   /**
    * List of recognized codes.
-   * @return {Array<String>}
+   * @return {string[]}
    */
   get codes() {
     return this._codes;
@@ -225,15 +217,16 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     this._codes = this._computeCodes();
     this._selectedResponse = this._computeSelectedResponse();
   }
+  
   /**
    * Computes list of status codes for the selector.
    *
-   * @return {Array<String>}
+   * @return {string[]|undefined}
    */
   _computeCodes() {
     const { returns } = this;
     if (!returns || !returns.length) {
-      return;
+      return undefined;
     }
     const codes = [];
     returns.forEach((item) => {
@@ -245,26 +238,28 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     codes.sort();
     return codes;
   }
+
   /**
    * Computes value for `_selectedResponse` property.
    * Codes are sorted so it has to match status code with entry in returns
    * array
-   * @return {Object}
+   * @returns {any|undefined}
    */
   _computeSelectedResponse() {
     const { selected, _codes, returns } = this;
     if (!returns || !_codes || (!selected && selected !== 0)) {
-      return;
+      return undefined;
     }
     const status = _codes[selected];
     return returns.find((item) => this._statusMatches(item, status));
   }
+
   /**
    * Checks if given `item` matches `statusCode`
    *
-   * @param {Object} item Response AMF model
-   * @param {String} status Status code as string
-   * @return {Boolean}
+   * @param {any} item Response AMF model
+   * @param {string} status Status code as string
+   * @return {boolean}
    */
   _statusMatches(item, status) {
     if (!item) {
@@ -273,22 +268,18 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     const value = this._getValue(item, this.ns.aml.vocabularies.apiContract.statusCode);
     return value === status;
   }
+
   /**
    * Sets `selected` 0 when codes changes.
    * It only sets selection if there's actually a value to render.
    * It prohibits from performing additional computations for nothing.
    *
-   * @param {?Array} codes
+   * @param {any[]=} codes
    */
   _codesChanged(codes) {
     if (codes && codes.length) {
       this.selected = 0;
     }
-  }
-
-  _apiChangedHandler(e) {
-    const { value } = e.detail;
-    this.amf = value;
   }
 
   _tabsHandler(e) {
@@ -305,7 +296,6 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
 
   render() {
     return html`<style>${this.styles}</style>
-    ${this._awareTemplate()}
     ${this._codesSelectorTemplate()}
     ${this._annotationsTemplate()}
     ${this._descriptionTemplate()}
@@ -332,27 +322,15 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     </div>`;
   }
 
-  _awareTemplate() {
-    const {
-      aware,
-    } = this;
-    if (!aware) {
-      return '';
-    }
-    return html`<raml-aware @api-changed="${this._apiChangedHandler}" .scope="${aware}"></raml-aware>`;
-  }
-
   _annotationsTemplate() {
     const {
       _hasCustomProperties,
-      compatibility,
       _selectedResponse,
     } = this;
     if (!_hasCustomProperties) {
       return '';
     }
     return html`<api-annotation-document
-      ?compatibility="${compatibility}"
       .shape="${_selectedResponse}"
     ></api-annotation-document>`;
   }
@@ -409,7 +387,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       ?narrow="${narrow}"
       ?compatibility="${compatibility}"
       ?graph="${graph}"
-      renderreadonly
+      renderReadonly
       opened></api-body-document>`
   }
 

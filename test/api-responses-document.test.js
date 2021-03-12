@@ -2,20 +2,26 @@ import { fixture, assert, nextFrame, aTimeout, html } from '@open-wc/testing';
 import { AmfLoader } from './amf-loader.js';
 import '../api-responses-document.js';
 
-describe('<api-responses-document>', function() {
+/** @typedef {import('..').ApiResponsesDocument} ApiResponsesDocument */
+
+describe('ApiResponsesDocument', () => {
+  /** 
+   * @returns {Promise<ApiResponsesDocument>}
+   */
   async function basicFixture() {
-    return (await fixture(`<api-responses-document></api-responses-document>`));
+    return fixture(html`<api-responses-document></api-responses-document>`);
   }
 
-  async function awareFixture() {
-    return (await fixture(`<api-responses-document aware="test"></api-responses-document>`));
-  }
-
+  /**
+   * @param {any} amf
+   * @param {any} returns
+   * @returns {Promise<ApiResponsesDocument>}
+   */
   async function modelFixture(amf, returns) {
-    return (await fixture(html`<api-responses-document
+    return fixture(html`<api-responses-document
       .amf="${amf}"
       .returns="${returns}"
-    ></api-responses-document>`));
+    ></api-responses-document>`);
   }
 
   [
@@ -25,29 +31,6 @@ describe('<api-responses-document>', function() {
   .forEach(([label, compact]) => {
     describe(label, () => {
       describe('Basic', () => {
-        it('Adds raml-aware to the DOM if aware is set', async () => {
-          const element = await awareFixture();
-          await nextFrame();
-          const node = element.shadowRoot.querySelector('raml-aware');
-          assert.ok(node);
-        });
-
-        it('reads amf model from the aware', async () => {
-          const element = await awareFixture();
-          await nextFrame();
-          const aware = document.createElement('raml-aware');
-          aware.scope = 'test';
-          aware.api = [{}];
-          assert.deepEqual(element.amf, [{}]);
-        });
-
-        it('raml-aware is not in the DOM by default', async () => {
-          const element = await basicFixture();
-          await nextFrame();
-          const node = element.shadowRoot.querySelector('raml-aware');
-          assert.notOk(node);
-        });
-
         it('selected is undefined by default', async () => {
           const element = await basicFixture();
           await nextFrame();
@@ -84,7 +67,7 @@ describe('<api-responses-document>', function() {
       });
 
       describe('Fully defined response', () => {
-        let element;
+        let element = /** @type ApiResponsesDocument */ (null);
         beforeEach(async () => {
           const amf = await AmfLoader.load(compact);
           element = await basicFixture();
@@ -164,7 +147,7 @@ describe('<api-responses-document>', function() {
       });
 
       describe('Partially defined response', () => {
-        let element;
+        let element = /** @type ApiResponsesDocument */ (null);
         beforeEach(async () => {
           const amf = await AmfLoader.load(compact);
           element = await basicFixture();
@@ -215,7 +198,7 @@ describe('<api-responses-document>', function() {
       });
 
       describe('Empty response', () => {
-        let element;
+        let element = /** @type ApiResponsesDocument */ (null);
         beforeEach(async () => {
           const amf = await AmfLoader.load(compact);
           element = await basicFixture();
@@ -254,7 +237,7 @@ describe('<api-responses-document>', function() {
       });
 
       describe('Links rendering', () => {
-        let element;
+        let element = /** @type ApiResponsesDocument */ (null);
         let amf;
 
         before(async () => {
@@ -292,10 +275,10 @@ describe('<api-responses-document>', function() {
       const responses = AmfLoader.responseModel(ramlApi, '/people', 'put');
       const element = await modelFixture(oasApi, responses);
       // button-name - Safari has some issue with processing toggle button in
-      // headers document. For no reason. I am putting it here temporaily,
+      // headers document. For no reason. I am putting it here temporarily,
       // hoping the updated test library version will have this fixed.
       await assert.isAccessible(element, {
-        ignoredRules: ['color-contrast', 'button-name']
+        ignoredRules: ['color-contrast', 'button-name', 'aria-command-name']
       });
     });
 
