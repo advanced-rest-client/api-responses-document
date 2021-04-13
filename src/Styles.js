@@ -14,7 +14,8 @@ arc-marked {
   font-style: italic;
 }
 
-.codes-selector {
+.codes-selector-divider {
+  margin: 0 50px;
   border-bottom: 1px #e5e5e5 solid;
 }
 

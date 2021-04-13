@@ -321,6 +321,7 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
         @selected-changed="${this._tabsHandler}">
         ${codes.map((item) => html`<anypoint-tab>${item}</anypoint-tab>`)}
       </anypoint-tabs>
+      <div class="codes-selector-divider"></div>
     </div>`;
   }
 
