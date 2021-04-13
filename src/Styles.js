@@ -21,4 +21,8 @@ arc-marked {
 api-links-document {
   margin-top: 20px;
 }
+
+.method-response {
+  padding-left: 20px;
+}
 `;

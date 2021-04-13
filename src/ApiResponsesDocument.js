@@ -297,12 +297,14 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   render() {
     return html`<style>${this.styles}</style>
     ${this._codesSelectorTemplate()}
-    ${this._annotationsTemplate()}
-    ${this._descriptionTemplate()}
-    ${this._headersTemplate()}
-    ${this._payloadTemplate()}
-    ${this._linksTemplate()}
-    ${this.noDocumentation ? html`<p class="no-info">No description provided</p>` : ''}`;
+    <div class="method-response">
+      ${this._annotationsTemplate()}
+      ${this._descriptionTemplate()}
+      ${this._headersTemplate()}
+      ${this._payloadTemplate()}
+      ${this._linksTemplate()}
+      ${this.noDocumentation ? html`<p class="no-info">No description provided</p>` : ''}
+    </div>`;
   }
 
   _codesSelectorTemplate() {
