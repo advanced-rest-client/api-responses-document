@@ -25,5 +25,6 @@ api-links-document {
 
 .method-response {
   padding-left: 20px;
+  padding-right: 20px;
 }
 `;
