@@ -16,7 +16,7 @@ arc-marked {
 
 .codes-selector-divider {
   margin: 0 50px;
-  border-bottom: 1px #e5e5e5 solid;
+  border-bottom: 1px var(--api-responses-document-codes-selector-divider-border-bottom-color, #e5e5e5) solid;
 }
 
 api-links-document {
