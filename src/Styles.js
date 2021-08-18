@@ -23,7 +23,7 @@ api-links-document {
 }
 
 .method-response {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: var(--api-responses-method-padding-left, 20px);
+  padding-right: var(--api-responses-method-padding-right, 20px);
 }
 `;
