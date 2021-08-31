@@ -15,7 +15,6 @@ arc-marked {
 }
 
 .codes-selector-divider {
-  margin: 0 50px;
   border-bottom: 1px var(--api-responses-document-codes-selector-divider-border-bottom-color, #e5e5e5) solid;
 }
 
@@ -24,7 +23,7 @@ api-links-document {
 }
 
 .method-response {
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: var(--api-responses-method-padding-left, 20px);
+  padding-right: var(--api-responses-method-padding-right, 20px);
 }
 `;
