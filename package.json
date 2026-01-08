@@ -27,9 +27,10 @@
   },
   "dependencies": {
     "@advanced-rest-client/arc-marked": "^1.1.0",
+    "@advanced-rest-client/icons": "^4.0.2",
     "@advanced-rest-client/markdown-styles": "^3.1.4",
     "@anypoint-web-components/anypoint-tabs": "^0.1.13",
-    "@api-components/amf-helper-mixin": "^4.5.7",
+    "@api-components/amf-helper-mixin": "^4.5.34",
     "@api-components/api-annotation-document": "^4.2.1",
     "@api-components/api-body-document": "^4.2.1",
     "@api-components/api-headers-document": "^4.2.4",
