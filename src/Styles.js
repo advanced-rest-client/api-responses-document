@@ -26,4 +26,9 @@ api-links-document {
   padding-left: var(--api-responses-method-padding-left, 20px);
   padding-right: var(--api-responses-method-padding-right, 20px);
 }
+
+.method-response.grpc-response {
+  padding-left: 0;
+  padding-right: 0;
+}
 `;

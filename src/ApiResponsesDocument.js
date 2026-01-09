@@ -97,6 +97,11 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
        * @type {Array<Object>|undefined}
        */
       links: { type: Array },
+      /**
+       * Method's endpoint definition as a
+       * `http://raml.org/vocabularies/http#endpoint` of AMF model.
+       */
+      endpoint: { type: Object },
     };
   }
 
@@ -224,15 +229,22 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
    * @return {string[]|undefined}
    */
   _computeCodes() {
-    const { returns } = this;
+    const { returns, endpoint } = this;
     if (!returns || !returns.length) {
       return undefined;
     }
+    
+    // Check if this is a gRPC endpoint
+    const isGrpc = this._isGrpcEndpoint(endpoint);
+    
     const codes = [];
     returns.forEach((item) => {
       const value = this._getValue(item, this.ns.aml.vocabularies.apiContract.statusCode);
+      // For gRPC, statusCode is empty string, use "success" as default
       if (value) {
         codes.push(value);
+      } else if (isGrpc && value === '') {
+        codes.push('success');
       }
     });
     codes.sort();
@@ -266,6 +278,10 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       return false;
     }
     const value = this._getValue(item, this.ns.aml.vocabularies.apiContract.statusCode);
+    // For gRPC, match "success" to empty statusCode
+    if (status === 'success' && value === '') {
+      return true;
+    }
     return value === status;
   }
 
@@ -294,10 +310,73 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     return this._ensureArray(response[key]);
   }
 
+  /**
+   * Checks if an operation is a gRPC operation
+   * @param {Object} operation The operation to check
+   * @returns {boolean} True if the operation is gRPC
+   */
+  _isGrpcOperation(operation) {
+    if (!operation) {
+      return false;
+    }
+    
+    // Check returns for gRPC media types
+    const returns = this._computeReturns(operation);
+    if (!returns || returns.length === 0) {
+      return false;
+    }
+    
+    // gRPC responses have empty status codes and protobuf media types
+    return returns.some(response => {
+      const statusCode = this._getValue(response, this.ns.aml.vocabularies.apiContract.statusCode);
+      const payloadKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.payload);
+      const payload = this._ensureArray(response[payloadKey]);
+      
+      if (!payload || payload.length === 0) {
+        return false;
+      }
+      
+      const mediaType = this._getValue(payload[0], this.ns.aml.vocabularies.core.mediaType);
+      const isGrpcMediaType = mediaType === 'application/protobuf' || mediaType === 'application/grpc';
+      const hasEmptyStatusCode = statusCode === '';
+      
+      return isGrpcMediaType && hasEmptyStatusCode;
+    });
+  }
+
+  /**
+   * Checks if the given endpoint has gRPC operations
+   * @param {Object} endpoint The endpoint to check
+   * @returns {boolean} True if the endpoint has gRPC operations
+   */
+  _isGrpcEndpoint(endpoint) {
+    if (!endpoint) {
+      return false;
+    }
+    
+    const opKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.supportedOperation);
+    const operations = endpoint[opKey];
+    
+    if (!operations) {
+      return false;
+    }
+    
+    const operationsList = this._ensureArray(operations);
+    if (!operationsList || operationsList.length === 0) {
+      return false;
+    }
+    
+    // Check if any operation is gRPC
+    return operationsList.some(operation => this._isGrpcOperation(operation));
+  }
+
   render() {
+    const isGrpc = this._isGrpcEndpoint(this.endpoint);
+    const responseClass = isGrpc ? 'method-response grpc-response' : 'method-response';
+    
     return html`<style>${this.styles}</style>
     ${this._codesSelectorTemplate()}
-    <div class="method-response">
+    <div class="${responseClass}">
       ${this._annotationsTemplate()}
       ${this._descriptionTemplate()}
       ${this._headersTemplate()}
@@ -308,10 +387,16 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
   }
 
   _codesSelectorTemplate() {
-    const { codes, selected } = this;
+    const { codes, selected, endpoint } = this;
     if (!codes || !codes.length) {
       return '';
     }
+    
+    // Don't show tabs for gRPC endpoints
+    if (this._isGrpcEndpoint(endpoint)) {
+      return '';
+    }
+    
     return html`
     <div class="codes-selector">
       <anypoint-tabs
@@ -378,7 +463,8 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       amf,
       narrow,
       compatibility,
-      graph
+      graph,
+      endpoint
     } = this;
     const hasPayload = !!(_payload && _payload.length);
     if (!hasPayload) {
@@ -387,11 +473,13 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     return html`<api-body-document
       .amf="${amf}"
       .body="${_payload}"
+      .endpoint="${endpoint}"
       ?narrow="${narrow}"
       ?compatibility="${compatibility}"
       ?graph="${graph}"
-      renderReadonly
-      opened></api-body-document>`
+      ?renderReadonly="${true}"
+      ?isResponse="${true}"
+      ?opened="${true}"></api-body-document>`
   }
 
   _linksTemplate() {

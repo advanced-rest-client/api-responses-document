@@ -38,7 +38,20 @@ AmfLoader.load = async function(compact=false, fileName='demo-api') {
 AmfLoader.lookupEndpoint = function(model, endpoint) {
   helper.amf = model;
   const webApi = helper._computeWebApi(model);
-  return helper._computeEndpointByPath(webApi, endpoint);
+  // Try to find by path first (REST)
+  let result = helper._computeEndpointByPath(webApi, endpoint);
+  
+  // If not found and endpoint doesn't start with '/', try finding by name (gRPC)
+  if (!result && !endpoint.startsWith('/')) {
+    const endpointKey = helper._getAmfKey(helper.ns.aml.vocabularies.apiContract.endpoint);
+    const endpoints = helper._ensureArray(webApi[endpointKey]);
+    result = endpoints.find((ep) => {
+      const name = helper._getValue(ep, helper.ns.aml.vocabularies.core.name);
+      return name === endpoint;
+    });
+  }
+  
+  return result;
 };
 
 AmfLoader.lookupOperation = function(model, endpoint, operation) {

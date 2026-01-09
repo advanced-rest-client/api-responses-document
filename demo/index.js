@@ -15,6 +15,7 @@ class ApiDemo extends ApiDemoPage {
     this.initObservableProperties([
       'compatibility',
       'returns',
+      'endpoint',
     ]);
 
     this.demoStates = ['Material', 'Anypoint'];
@@ -43,12 +44,15 @@ class ApiDemo extends ApiDemoPage {
   setData(selected) {
     const webApi = this._computeWebApi(this.amf);
     const method = this._computeMethodModel(webApi, selected);
+    const endpoint = this._computeMethodEndpoint(webApi, selected);
     this.returns = this._computeReturns(method);
+    this.endpoint = endpoint;
     this.hasData = true;
   }
 
   _apiListTemplate() {
     return [
+      ['grpc-test', 'GRPC test'],
       ['demo-api', 'Demo API'],
       ['oas-callbacks', 'OAS 3 callbacks'],
     ].map(([file, label]) => html`
@@ -65,6 +69,7 @@ class ApiDemo extends ApiDemoPage {
       amf,
       returns,
       narrow,
+      endpoint,
     } = this;
     return html `
     <section class="documentation-section">
@@ -82,6 +87,7 @@ class ApiDemo extends ApiDemoPage {
         <api-responses-document
           .amf="${amf}"
           .returns="${returns}"
+          .endpoint="${endpoint}"
           ?narrow="${narrow}"
           ?compatibility="${compatibility}"
           slot="content"

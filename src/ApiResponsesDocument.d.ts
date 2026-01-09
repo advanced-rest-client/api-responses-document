@@ -82,6 +82,11 @@ export declare class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     * A computed list of OAS' Links in currently selected response.
     */
    links: any[]|undefined;
+   /**
+    * Method's endpoint definition as a
+    * `http://raml.org/vocabularies/http#endpoint` of AMF model.
+    */
+   endpoint?: object;
   
   
 
