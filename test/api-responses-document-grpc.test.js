@@ -26,9 +26,9 @@ describe('ApiResponsesDocument - gRPC support', () => {
     ></api-responses-document>`);
   }
 
+  // Only test with full model since grpc-test-compact.json doesn't exist
   [
-    ['Full model', false],
-    ['Compact model', true]
+    ['Full model', false]
   ]
   .forEach(([label, compact]) => {
     describe(label, () => {
@@ -288,7 +288,8 @@ describe('ApiResponsesDocument - gRPC support', () => {
     let grpcAmf;
 
     before(async () => {
-      grpcAmf = await AmfLoader.load(true, 'grpc-test');
+      // Use full model only (compact=false)
+      grpcAmf = await AmfLoader.load(false, 'grpc-test');
     });
 
     it('is accessible with gRPC model data', async () => {
