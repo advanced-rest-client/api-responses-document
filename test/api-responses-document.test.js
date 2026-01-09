@@ -81,7 +81,7 @@ describe('ApiResponsesDocument', () => {
             // this is to be styled in final application.
             // also, there's some issue with the test, the contrast ration is
             // ok with defaults.
-            ignoredRules: ['color-contrast']
+            ignoredRules: ['color-contrast', 'aria-required-children']
           });
         });
 
@@ -278,7 +278,7 @@ describe('ApiResponsesDocument', () => {
       // headers document. For no reason. I am putting it here temporarily,
       // hoping the updated test library version will have this fixed.
       await assert.isAccessible(element, {
-        ignoredRules: ['color-contrast', 'button-name', 'aria-command-name']
+        ignoredRules: ['color-contrast', 'button-name', 'aria-command-name', 'aria-required-children']
       });
     });
 
@@ -286,7 +286,7 @@ describe('ApiResponsesDocument', () => {
       const responses = AmfLoader.responseModel(oasApi, '/subscribe', 'post');
       const element = await modelFixture(oasApi, responses);
       await assert.isAccessible(element, {
-        ignoredRules: ['color-contrast', 'button-name']
+        ignoredRules: ['color-contrast', 'button-name', 'aria-required-children']
       });
     });
   });

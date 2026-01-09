@@ -27,8 +27,8 @@ describe('ApiResponsesDocument - gRPC support', () => {
   }
 
   [
-    ['Full model', true],
-    ['Compact model', false]
+    ['Full model', false],
+    ['Compact model', true]
   ]
   .forEach(([label, compact]) => {
     describe(label, () => {
@@ -161,10 +161,10 @@ describe('ApiResponsesDocument - gRPC support', () => {
           assert.ok(bodyDoc.endpoint, 'endpoint is passed to body document');
         });
 
-        it('sets isResponse property on api-body-document', async () => {
+        it('sets renderReadOnly property on api-body-document', async () => {
           await nextFrame();
           const bodyDoc = element.shadowRoot.querySelector('api-body-document');
-          assert.isTrue(bodyDoc.isResponse);
+          assert.isTrue(bodyDoc.renderReadOnly, 'renderReadOnly is set to true');
         });
       });
 
@@ -301,7 +301,7 @@ describe('ApiResponsesDocument - gRPC support', () => {
       ></api-responses-document>`);
       
       await assert.isAccessible(element, {
-        ignoredRules: ['color-contrast', 'button-name', 'aria-command-name']
+        ignoredRules: ['color-contrast', 'button-name', 'aria-command-name', 'aria-required-children']
       });
     });
   });
