@@ -240,10 +240,10 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
     const codes = [];
     returns.forEach((item) => {
       const value = this._getValue(item, this.ns.aml.vocabularies.apiContract.statusCode);
-      // For gRPC, statusCode is empty string, use "success" as default
+      // For gRPC, statusCode may be absent or empty string in the AMF model
       if (value) {
         codes.push(value);
-      } else if (isGrpc && value === '') {
+      } else if (isGrpc && !value) {
         codes.push('success');
       }
     });
@@ -278,8 +278,8 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       return false;
     }
     const value = this._getValue(item, this.ns.aml.vocabularies.apiContract.statusCode);
-    // For gRPC, match "success" to empty statusCode
-    if (status === 'success' && value === '') {
+    // For gRPC, match "success" to absent or empty statusCode
+    if (status === 'success' && !value) {
       return true;
     }
     return value === status;

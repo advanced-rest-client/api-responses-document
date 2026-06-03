@@ -101,6 +101,36 @@ describe('ApiResponsesDocument - gRPC support', () => {
           const response = element.returns[0];
           assert.isTrue(element._statusMatches(response, 'success'));
         });
+
+        // W-22299818: in real gRPC AMF models the statusCode node is absent
+        // (undefined), not an empty string. The previous `value === ''` guard
+        // missed this and the response payload never rendered.
+        it('computes "success" code when gRPC statusCode is absent', async () => {
+          const endpoint = AmfLoader.lookupEndpoint(amf, 'Greeter');
+          const returns = AmfLoader.responseModel(amf, 'Greeter', 'post');
+          const el = await basicFixture();
+          const statusKey = el._getAmfKey(el.ns.aml.vocabularies.apiContract.statusCode);
+          const stripped = returns.map((item) => {
+            const clone = { ...item };
+            delete clone[statusKey];
+            return clone;
+          });
+          el.amf = amf;
+          el.endpoint = endpoint;
+          el.returns = stripped;
+          await aTimeout();
+
+          assert.include(el._codes, 'success', 'success code computed for absent statusCode');
+          assert.ok(el._selectedResponse, 'selectedResponse resolves');
+          assert.isTrue(el._payload && el._payload.length > 0, 'response payload renders');
+        });
+
+        it('matches "success" status to absent status code', () => {
+          const statusKey = element._getAmfKey(element.ns.aml.vocabularies.apiContract.statusCode);
+          const stripped = { ...element.returns[0] };
+          delete stripped[statusKey];
+          assert.isTrue(element._statusMatches(stripped, 'success'));
+        });
       });
 
       describe('gRPC tabs behavior', () => {

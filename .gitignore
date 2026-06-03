@@ -58,6 +58,9 @@ node_modules
 coverage
 dist/
 
+# acm-sdd workflow state (operational, not committed)
+.sdd/.state/
+
 # AMF models
 /demo/*.json
 !demo/apis.json
