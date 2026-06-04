@@ -97,26 +97,82 @@ describe('ApiResponsesDocument - gRPC support', () => {
           assert.ok(element._selectedResponse);
         });
 
-        it('matches "success" status to absent status code', () => {
+        it('matches "success" status to empty status code', () => {
           const response = element.returns[0];
           assert.isTrue(element._statusMatches(response, 'success'));
         });
+      });
 
-        // W-22299818: the real gRPC AMF model has NO statusCode node (the value
-        // is absent, not an empty string). The detection in _isGrpcEndpoint and
-        // the guards in _computeCodes/_statusMatches all assumed `=== ''`, so an
-        // absent statusCode skipped gRPC detection entirely and the response
-        // payload was never rendered.
-        it('reads statusCode as absent (undefined) in the real model', () => {
+      // W-22299818: the bundled grpc-test fixture (a generated JSON-LD model)
+      // encodes statusCode as an empty string. The AMF model produced in
+      // PRODUCTION omits the statusCode node entirely (value is undefined).
+      // Both must be treated as gRPC. We do NOT edit the fixture — instead we
+      // derive the production shape by deep-cloning the real endpoint graph and
+      // removing every statusCode node, then assert the component still works.
+      describe('gRPC with absent statusCode (production model shape)', () => {
+        let amf;
+        let element;
+
+        /**
+         * Deep-clone an AMF node and recursively delete every statusCode key,
+         * reproducing what the production AMF generator emits for gRPC.
+         * @param {any} node
+         * @param {string} statusKey resolved AMF key for apiContract#statusCode
+         * @returns {any}
+         */
+        function stripStatusCode(node, statusKey) {
+          const clone = JSON.parse(JSON.stringify(node));
+          (function walk(obj) {
+            if (Array.isArray(obj)) {
+              obj.forEach(walk);
+            } else if (obj && typeof obj === 'object') {
+              delete obj[statusKey];
+              Object.keys(obj).forEach((k) => walk(obj[k]));
+            }
+          })(clone);
+          return clone;
+        }
+
+        before(async () => {
+          amf = await AmfLoader.load(compact, 'grpc-test');
+        });
+
+        beforeEach(async () => {
+          const helper = await basicFixture();
+          const statusKey = helper._getAmfKey(helper.ns.aml.vocabularies.apiContract.statusCode);
+          const endpoint = stripStatusCode(AmfLoader.lookupEndpoint(amf, 'Greeter'), statusKey);
+          const returns = AmfLoader.responseModel(amf, 'Greeter', 'post')
+            .map((r) => stripStatusCode(r, statusKey));
+          element = await modelFixture(amf, returns, endpoint);
+          await aTimeout();
+        });
+
+        it('has an absent (undefined) statusCode, not an empty string', () => {
           const value = element._getValue(
             element.returns[0],
             element.ns.aml.vocabularies.apiContract.statusCode
           );
-          assert.isUndefined(value, 'statusCode is absent, not empty string');
+          assert.isUndefined(value);
         });
 
-        it('detects the gRPC endpoint with an absent statusCode', () => {
+        it('detects the gRPC endpoint', () => {
           assert.isTrue(element._isGrpcEndpoint(element.endpoint));
+        });
+
+        it('computes the "success" code', () => {
+          assert.include(element._codes, 'success');
+        });
+
+        it('resolves a selected response', () => {
+          assert.ok(element._selectedResponse);
+        });
+
+        it('renders the response payload', () => {
+          assert.isTrue(element._payload && element._payload.length > 0);
+        });
+
+        it('does not fall back to "No description provided"', () => {
+          assert.isFalse(element.noDocumentation);
         });
       });
 

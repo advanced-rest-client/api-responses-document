@@ -58,8 +58,8 @@ node_modules
 coverage
 dist/
 
-# acm-sdd workflow state (operational, not committed)
-.sdd/.state/
+# acm-sdd workflow artifacts (local, not committed to this repo)
+.sdd/
 
 # AMF models
 /demo/*.json
