@@ -326,21 +326,22 @@ export class ApiResponsesDocument extends AmfHelperMixin(LitElement) {
       return false;
     }
     
-    // gRPC responses have empty status codes and protobuf media types
+    // gRPC responses carry a protobuf/grpc media type and no status code
+    // (absent or empty string in the AMF model)
     return returns.some(response => {
       const statusCode = this._getValue(response, this.ns.aml.vocabularies.apiContract.statusCode);
       const payloadKey = this._getAmfKey(this.ns.aml.vocabularies.apiContract.payload);
       const payload = this._ensureArray(response[payloadKey]);
-      
+
       if (!payload || payload.length === 0) {
         return false;
       }
-      
+
       const mediaType = this._getValue(payload[0], this.ns.aml.vocabularies.core.mediaType);
       const isGrpcMediaType = mediaType === 'application/protobuf' || mediaType === 'application/grpc';
-      const hasEmptyStatusCode = statusCode === '';
-      
-      return isGrpcMediaType && hasEmptyStatusCode;
+      const hasNoStatusCode = !statusCode;
+
+      return isGrpcMediaType && hasNoStatusCode;
     });
   }
 

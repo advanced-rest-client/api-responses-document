@@ -151,11 +151,6 @@
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": ""
-                      }
-                    ],
                     "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": ""
@@ -388,11 +383,6 @@
                       "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": ""
-                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -627,11 +617,6 @@
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": ""
-                      }
-                    ],
                     "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": ""
@@ -864,11 +849,6 @@
                       "http://a.ml/vocabularies/core#Response",
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": ""
-                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
